@@ -45,12 +45,11 @@ void ofApp::draw(){
     ofSetColor(ofColor::black);
     ofNoFill();
     ofSetRectMode(OF_RECTMODE_CORNER);
-    int topLeftX = center.x - (mWidth * 3);
-    int topLeftY = center.y - (mWidth * 3);
+    ofVec2f topLeft(center.x - (mWidth * 3), center.y - (mWidth * 3));
     for (int i=0; i < rows; i++) {
         for (int j=0; j < cols; j++) {
-            ofDrawRectangle(topLeftX + (mWidth * i),
-                            topLeftY + (mWidth * j),
+            ofDrawRectangle(topLeft.x + (mWidth * i),
+                            topLeft.y + (mWidth * j),
                             mWidth, mWidth);
         }
     }
