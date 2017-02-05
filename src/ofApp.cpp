@@ -39,17 +39,30 @@ void ofApp::draw(){
     goals.draw(center, radius);
 
     // draw the motor grid
-    ofSetColor(ofColor::white);
-    ofSetRectMode(OF_RECTMODE_CENTER);
     auto dim = MOTOR_GRID_SCALE * bound;
-    ofDrawRectangle(center.x, center.y, dim, dim);
     int rows = 6;
     int cols = 6;
     int mWidth = dim / rows;
+    ofVec2f topLeft(center.x - (mWidth * 3), center.y - (mWidth * 3));    
+    drawGrid(rows, cols, center, topLeft, dim, mWidth);
+
+    // finally, the motors
+    motors.draw(topLeft, mWidth);
+}
+
+void ofApp::drawBoundaryCircle(ofVec2f center, float radius) {
+    ofSetColor(220, 220, 220);
+    ofDrawCircle(center.x, center.y, radius);
+}
+
+void ofApp::drawGrid(int rows, int cols, ofVec2f center, ofVec2f topLeft, float dim, int mWidth) {
+    ofSetColor(ofColor::white);
+    ofSetRectMode(OF_RECTMODE_CENTER);
+    ofDrawRectangle(center.x, center.y, dim, dim);
     ofSetColor(ofColor::black);
     ofNoFill();
     ofSetRectMode(OF_RECTMODE_CORNER);
-    ofVec2f topLeft(center.x - (mWidth * 3), center.y - (mWidth * 3));
+
     for (int i=0; i < rows; i++) {
         for (int j=0; j < cols; j++) {
             ofDrawRectangle(topLeft.x + (mWidth * i),
@@ -57,13 +70,6 @@ void ofApp::draw(){
                             mWidth, mWidth);
         }
     }
-
-    motors.draw(topLeft, mWidth);
-}
-
-void ofApp::drawBoundaryCircle(ofVec2f center, float radius) {
-    ofSetColor(220, 220, 220);
-    ofDrawCircle(center.x, center.y, radius);
 }
 
 
