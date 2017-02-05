@@ -28,7 +28,7 @@ void ofApp::draw(){
     ofVec2f center(width / 2, height / 2);
 
     // draw a big ol circle
-    ofSetColor(200, 200, 200);
+    ofSetColor(220, 220, 220);
     auto radius = (bound / 2) * BOUNDARY_CIRCLE_SCALE;
     ofDrawCircle(center.x, center.y, radius);
 
@@ -39,6 +39,21 @@ void ofApp::draw(){
     ofSetRectMode(OF_RECTMODE_CENTER);
     auto dim = MOTOR_GRID_SCALE * bound;
     ofDrawRectangle(center.x, center.y, dim, dim);
+    int rows = 6;
+    int cols = 6;
+    int mWidth = dim / rows;
+    ofSetColor(ofColor::black);
+    ofNoFill();
+    ofSetRectMode(OF_RECTMODE_CORNER);
+    int topLeftX = center.x - (mWidth * 3);
+    int topLeftY = center.y - (mWidth * 3);
+    for (int i=0; i < rows; i++) {
+        for (int j=0; j < cols; j++) {
+            ofDrawRectangle(topLeftX + (mWidth * i),
+                            topLeftY + (mWidth * j),
+                            mWidth, mWidth);
+        }
+    }
 }
 
 //--------------------------------------------------------------
@@ -92,6 +107,6 @@ void ofApp::gotMessage(ofMessage msg){
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
+void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
