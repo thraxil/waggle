@@ -59,7 +59,7 @@ void ofApp::draw(){
         }
     }
 
-    motors.draw(center, mWidth);
+    motors.draw(topLeft, mWidth);
 }
 
 //--------------------------------------------------------------

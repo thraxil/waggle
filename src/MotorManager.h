@@ -8,7 +8,7 @@ class MotorManager {
 public:
     void setup();
     void update();
-    void draw(ofVec2f center, int mWidth);
+    void draw(ofVec2f topLeft, int mWidth);
 
 		MotorManager();
  private:

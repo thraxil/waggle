@@ -30,8 +30,7 @@ void MotorManager::setup() {
 void MotorManager::update() {
 }
 
-void MotorManager::draw(ofVec2f center, int mWidth) {
-    ofVec2f topLeft(center.x - (mWidth * 3), center.y - (mWidth * 3));
+void MotorManager::draw(ofVec2f topLeft, int mWidth) {
     for (int i=0; i < motors.size(); i++) {
         int row = rows[i];
         int col = cols[i];
