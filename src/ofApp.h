@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "GoalManager.h"
+#include "MotorManager.h"
 
 #define NBALLS 10
 
@@ -25,4 +26,5 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
  private:
 		GoalManager goals;
+		MotorManager motors;
 };

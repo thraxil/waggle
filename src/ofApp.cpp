@@ -13,6 +13,7 @@ void ofApp::setup(){
     ofEnableAntiAliasing();
 
     goals.setup(NGOALS);
+    motors.setup();
 }
 
 //--------------------------------------------------------------
@@ -57,6 +58,8 @@ void ofApp::draw(){
                             mWidth, mWidth);
         }
     }
+
+    motors.draw(center, mWidth);
 }
 
 //--------------------------------------------------------------
