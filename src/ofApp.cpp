@@ -1,5 +1,8 @@
 #include "ofApp.h"
 
+#define BOUNDARY_CIRCLE_SCALE 0.9
+#define MOTOR_GRID_SCALE 0.6
+
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetBackgroundAuto(false);
@@ -15,8 +18,27 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofBackground(0);
+    ofBackground(ofColor::white);
 
+    // some useful info about the screen
+    auto width = ofGetWidth();
+    auto height = ofGetHeight();
+    auto bound = std::min(width, height);
+
+    ofVec2f center(width / 2, height / 2);
+
+    // draw a big ol circle
+    ofSetColor(200, 200, 200);
+    auto radius = (bound / 2) * BOUNDARY_CIRCLE_SCALE;
+    ofDrawCircle(center.x, center.y, radius);
+
+    // draw the goals
+
+    // draw the motor grid
+    ofSetColor(ofColor::white);
+    ofSetRectMode(OF_RECTMODE_CENTER);
+    auto dim = MOTOR_GRID_SCALE * bound;
+    ofDrawRectangle(center.x, center.y, dim, dim);
 }
 
 //--------------------------------------------------------------
