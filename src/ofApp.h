@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "Goal.h"
+#include "GoalManager.h"
 
 #define NBALLS 10
 
@@ -23,5 +23,6 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		vector <Goal> goals;
+ private:
+		GoalManager goals;
 };

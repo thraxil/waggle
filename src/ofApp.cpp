@@ -2,6 +2,7 @@
 
 #define BOUNDARY_CIRCLE_SCALE 0.9
 #define MOTOR_GRID_SCALE 0.6
+#define NGOALS 8
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -10,6 +11,8 @@ void ofApp::setup(){
     ofSetFrameRate(60);
     ofSetCircleResolution(50);
     ofEnableAntiAliasing();
+
+    goals.setup(NGOALS);
 }
 
 //--------------------------------------------------------------
@@ -33,6 +36,7 @@ void ofApp::draw(){
     ofDrawCircle(center.x, center.y, radius);
 
     // draw the goals
+    goals.draw(center, radius);
 
     // draw the motor grid
     ofSetColor(ofColor::white);

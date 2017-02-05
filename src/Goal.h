@@ -6,11 +6,8 @@
 class Goal {
 public:
     void setup(int _idx);
-    void update();
-    void draw();
 
     int idx;
-    ofColor color;
 
     Goal();
 private:
