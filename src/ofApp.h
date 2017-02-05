@@ -25,6 +25,8 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
  private:
+		void drawBoundaryCircle(ofVec2f center, float radius);
+		
 		GoalManager goals;
 		MotorManager motors;
 };

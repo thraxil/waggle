@@ -30,11 +30,10 @@ void ofApp::draw(){
     auto bound = std::min(width, height);
 
     ofVec2f center(width / 2, height / 2);
+    auto radius = (bound / 2) * BOUNDARY_CIRCLE_SCALE;
 
     // draw a big ol circle
-    ofSetColor(220, 220, 220);
-    auto radius = (bound / 2) * BOUNDARY_CIRCLE_SCALE;
-    ofDrawCircle(center.x, center.y, radius);
+    drawBoundaryCircle(center, radius);
 
     // draw the goals
     goals.draw(center, radius);
@@ -61,6 +60,12 @@ void ofApp::draw(){
 
     motors.draw(topLeft, mWidth);
 }
+
+void ofApp::drawBoundaryCircle(ofVec2f center, float radius) {
+    ofSetColor(220, 220, 220);
+    ofDrawCircle(center.x, center.y, radius);
+}
+
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
