@@ -5,11 +5,15 @@
 
 class Goal {
 public:
-    void setup(int _idx);
-
     int idx;
 
+    void setup(int _idx);
+		void select();
+		void unselect();
+		bool getIsTarget();
+
     Goal();
-private:
+ private:
+		bool isTarget;
 };
 #endif
