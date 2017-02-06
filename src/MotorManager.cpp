@@ -49,7 +49,6 @@ void MotorManager::draw(ofVec2f topLeft, int mWidth) {
 }
 
 void MotorManager::mouseReleased(int x, int y, int button){
-    ofLogNotice() << "motormanager handling mouse click";
     for (unsigned int i=0; i<targets.size(); i++) {
         auto t = targets.at(i);
         if ((x >= t.x && x < (t.x + t.width)) &&
