@@ -24,6 +24,9 @@ void MotorManager::setup() {
         Motor m;
         m.setup(i);
         motors.push_back(m);
+
+        MotorTarget t;
+        targets.push_back(t);
     }
 }
 
@@ -38,10 +41,20 @@ void MotorManager::draw(ofVec2f topLeft, int mWidth) {
         ofDrawCircle(topLeft.x + (mWidth * row) + radius,
                      topLeft.y + (mWidth * col) + radius,
                      radius);
+        targets.at(i).x = topLeft.x + (mWidth * row);
+        targets.at(i).y = topLeft.y + (mWidth * col);
+        targets.at(i).width = mWidth;
     }
 
 }
 
 void MotorManager::mouseReleased(int x, int y, int button){
     ofLogNotice() << "motormanager handling mouse click";
+    for (unsigned int i=0; i<targets.size(); i++) {
+        auto t = targets.at(i);
+        if ((x >= t.x && x < (t.x + t.width)) &&
+            (y >= t.y && y < (t.y + t.width))) {
+            ofLogNotice() << "motor " << i << " clicked";
+        }
+    }
 }

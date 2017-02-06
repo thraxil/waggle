@@ -4,6 +4,11 @@
 #include "ofMain.h"
 #include "Motor.h"
 
+struct MotorTarget {
+		int x, y;
+		float width;
+};
+
 class MotorManager {
 public:
     void setup();
@@ -14,5 +19,6 @@ public:
 		MotorManager();
  private:
 		vector <Motor> motors;
+		vector <MotorTarget> targets;
 };
 #endif
