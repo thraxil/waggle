@@ -38,11 +38,11 @@ void MotorManager::draw(ofVec2f topLeft, int mWidth) {
         int row = rows[i];
         int col = cols[i];
         auto radius = float(mWidth) / 2;
-        ofDrawCircle(topLeft.x + (mWidth * row) + radius,
-                     topLeft.y + (mWidth * col) + radius,
+        ofDrawCircle(topLeft.x + (mWidth * col) + radius,
+                     topLeft.y + (mWidth * row) + radius,
                      radius);
-        targets.at(i).x = topLeft.x + (mWidth * row);
-        targets.at(i).y = topLeft.y + (mWidth * col);
+        targets.at(i).x = topLeft.x + (mWidth * col);
+        targets.at(i).y = topLeft.y + (mWidth * row);
         targets.at(i).width = mWidth;
     }
 
