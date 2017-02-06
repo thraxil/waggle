@@ -2,7 +2,7 @@
 #define _MOTOR
 #include "ofMain.h"
 
-enum State {MOTOR_OFF, MOTOR_HALF, MOTOR_FULL};
+enum class MotorState : int { OFF, HALF, FULL};
 
 class Motor {
  public:
@@ -10,7 +10,7 @@ class Motor {
 		Motor();
  private:
 		int idx;
-		State state;
+		MotorState state;
 };
 
 #endif
