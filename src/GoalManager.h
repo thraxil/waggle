@@ -15,6 +15,7 @@ public:
     void update();
     void draw(ofVec2f center, float radius);
 		void mouseReleased(int x, int y, int button);
+		void clearAll();
 
 		GoalManager();
  private:

@@ -53,6 +53,17 @@ void GoalManager::mouseReleased(int x, int y, int button){
         auto distance = ofDist(x, y, t.x, t.y);
         if (distance < t.radius) {
             ofLogNotice() << "goal " << i << " clicked";
+            auto isTarget = goals.at(i).getIsTarget();
+            clearAll();
+            if (!isTarget) {
+                goals.at(i).select();
+            }
         }
+    }
+}
+
+void GoalManager::clearAll() {
+    for (auto & goal : goals) {
+        goal.unselect();
     }
 }
