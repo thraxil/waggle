@@ -9,6 +9,7 @@ public:
     void setup();
     void update();
     void draw(ofVec2f topLeft, int mWidth);
+		void mouseReleased(int x, int y, int button);		
 
 		MotorManager();
  private:

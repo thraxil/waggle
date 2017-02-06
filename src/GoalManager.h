@@ -9,6 +9,7 @@ public:
     void setup(int _ngoals);
     void update();
     void draw(ofVec2f center, float radius);
+		void mouseReleased(int x, int y, int button);
 
 		GoalManager();
  private:

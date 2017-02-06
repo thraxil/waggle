@@ -41,3 +41,7 @@ void MotorManager::draw(ofVec2f topLeft, int mWidth) {
     }
 
 }
+
+void MotorManager::mouseReleased(int x, int y, int button){
+
+}

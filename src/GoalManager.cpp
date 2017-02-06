@@ -27,3 +27,7 @@ void GoalManager::draw(ofVec2f center, float radius) {
         ofDrawCircle(x, y, size);
     }
 }
+
+void GoalManager::mouseReleased(int x, int y, int button){
+
+}
