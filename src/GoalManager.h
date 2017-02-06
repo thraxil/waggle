@@ -4,6 +4,11 @@
 #include "ofMain.h"
 #include "Goal.h"
 
+struct GoalTarget {
+		int x, y;
+		float radius;
+};
+
 class GoalManager {
 public:
     void setup(int _ngoals);
@@ -14,8 +19,6 @@ public:
 		GoalManager();
  private:
 		vector <Goal> goals;
-		ofVec2f screenCenter;
-		float goalsRadius;
-		float goalSize;
+		vector <GoalTarget> targets;
 };
 #endif

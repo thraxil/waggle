@@ -9,6 +9,8 @@ void GoalManager::setup(int ngoals) {
         Goal g;
         g.setup(i);
         goals.push_back(g);
+        GoalTarget t;
+        targets.push_back(t);
     }
 }
 
@@ -25,21 +27,17 @@ void GoalManager::draw(ofVec2f center, float radius) {
         auto x = center.x + (cos(angle) * radius);
         auto y = center.y + (sin(angle) * radius);
         ofDrawCircle(x, y, size);
+        targets.at(i).x = x;
+        targets.at(i).y = y;
+        targets.at(i).radius = size;
     }
-    screenCenter = center;
-    goalsRadius = radius;
-    goalSize = size;
 }
 
 void GoalManager::mouseReleased(int x, int y, int button){
-    ofLogNotice() << "goalanager handling mouse click";
-    auto step = 360.0 / goals.size();
-    for (unsigned int i=0; i<goals.size(); i++) {
-        auto angle = ofDegToRad(i * step);
-        auto goalX = screenCenter.x + (cos(angle) * goalsRadius);
-        auto goalY = screenCenter.y + (sin(angle) * goalsRadius);
-        auto distance = ofDist(x, y, goalX, goalY);
-        if (distance < goalSize) {
+    for (unsigned int i=0; i<targets.size(); i++) {
+        auto t = targets.at(i);
+        auto distance = ofDist(x, y, t.x, t.y);
+        if (distance < t.radius) {
             ofLogNotice() << "goal " << i << " clicked";
         }
     }
