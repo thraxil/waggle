@@ -6,6 +6,11 @@ Motor::Motor() {
 void Motor::setup(int _idx) {
     idx = _idx;
     state = MotorState::OFF;
+
+    // set up state transition table
+    stateTransitions[MotorState::OFF] = MotorState::HALF;
+    stateTransitions[MotorState::HALF] = MotorState::FULL;
+    stateTransitions[MotorState::FULL] = MotorState::OFF;
 }
 
 MotorState Motor::getState() {
@@ -13,15 +18,5 @@ MotorState Motor::getState() {
 }
 
 void Motor::interact() {
-    switch(state) {
-    case MotorState::OFF:
-        state = MotorState::HALF;
-        break;
-    case MotorState::HALF:
-        state = MotorState::FULL;
-        break;
-    case MotorState::FULL:
-        state = MotorState::OFF;
-        break;
-    }
+    state = stateTransitions[state];
 }

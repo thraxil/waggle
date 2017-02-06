@@ -14,7 +14,7 @@ class Motor {
  private:
 		int idx;
 		MotorState state;
-
+		std::map<MotorState, MotorState> stateTransitions;
 };
 
 #endif
