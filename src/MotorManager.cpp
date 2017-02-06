@@ -28,22 +28,14 @@ void MotorManager::setup() {
         MotorTarget t;
         targets.push_back(t);
     }
+
+    // populate color table
+    colorMap[MotorState::HALF] = ofColor::orange;
+    colorMap[MotorState::FULL] = ofColor::red;
+    colorMap[MotorState::OFF] = ofColor::white;
 }
 
 void MotorManager::update() {
-}
-
-ofColor MotorManager::colorFromState(MotorState s) {
-    switch(s) {
-    case MotorState::HALF:
-        return ofColor::orange;
-        break;
-    case MotorState::FULL:
-        return ofColor::red;
-        break;
-    default:
-        return ofColor::white;
-    }
 }
 
 void MotorManager::draw(ofVec2f topLeft, int mWidth) {
@@ -53,7 +45,7 @@ void MotorManager::draw(ofVec2f topLeft, int mWidth) {
         auto radius = float(mWidth) / 2;
 
         // fill color based on motor state
-        ofSetColor(colorFromState(motors.at(i).getState()));
+        ofSetColor(colorMap[motors.at(i).getState()]);
         ofFill();
         ofDrawCircle(topLeft.x + (mWidth * col) + radius,
                      topLeft.y + (mWidth * row) + radius,

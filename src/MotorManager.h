@@ -20,7 +20,6 @@ public:
  private:
 		vector <Motor> motors;
 		vector <MotorTarget> targets;
-
-		ofColor colorFromState(MotorState s);
+    std::map<MotorState,ofColor> colorMap;
 };
 #endif
