@@ -9,6 +9,7 @@ void GoalManager::setup(int ngoals) {
         Goal g;
         g.setup(i);
         goals.push_back(g);
+
         GoalTarget t;
         targets.push_back(t);
     }
