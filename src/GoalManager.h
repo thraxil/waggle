@@ -14,5 +14,8 @@ public:
 		GoalManager();
  private:
 		vector <Goal> goals;
+		ofVec2f screenCenter;
+		float goalsRadius;
+		float goalSize;
 };
 #endif
