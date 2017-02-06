@@ -31,7 +31,7 @@ void MotorManager::update() {
 }
 
 void MotorManager::draw(ofVec2f topLeft, int mWidth) {
-    for (int i=0; i < motors.size(); i++) {
+    for (unsigned int i=0; i < motors.size(); i++) {
         int row = rows[i];
         int col = cols[i];
         auto radius = float(mWidth) / 2;

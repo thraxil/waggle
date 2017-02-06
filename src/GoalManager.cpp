@@ -20,7 +20,7 @@ void GoalManager::draw(ofVec2f center, float radius) {
     auto size = GOAL_SCALE * radius;
     ofSetColor(ofColor::black);
     ofFill();
-    for (int i=0; i<goals.size(); i++) {
+    for (unsigned int i=0; i<goals.size(); i++) {
         auto angle = ofDegToRad(i * step);
         auto x = center.x + (cos(angle) * radius);
         auto y = center.y + (sin(angle) * radius);
