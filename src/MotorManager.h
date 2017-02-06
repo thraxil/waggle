@@ -20,5 +20,7 @@ public:
  private:
 		vector <Motor> motors;
 		vector <MotorTarget> targets;
+
+		ofColor colorFromState(MotorState s);
 };
 #endif

@@ -33,14 +33,40 @@ void MotorManager::setup() {
 void MotorManager::update() {
 }
 
+ofColor MotorManager::colorFromState(MotorState s) {
+    switch(s) {
+    case MotorState::HALF:
+        return ofColor::orange;
+        break;
+    case MotorState::FULL:
+        return ofColor::red;
+        break;
+    default:
+        return ofColor::white;
+    }
+}
+
 void MotorManager::draw(ofVec2f topLeft, int mWidth) {
     for (unsigned int i=0; i < motors.size(); i++) {
         int row = rows[i];
         int col = cols[i];
         auto radius = float(mWidth) / 2;
+
+        // fill color based on motor state
+        ofSetColor(colorFromState(motors.at(i).getState()));
+        ofFill();
         ofDrawCircle(topLeft.x + (mWidth * col) + radius,
                      topLeft.y + (mWidth * row) + radius,
                      radius);
+
+        // then a black outline
+        ofSetColor(ofColor::black);
+        ofNoFill();
+        ofDrawCircle(topLeft.x + (mWidth * col) + radius,
+                     topLeft.y + (mWidth * row) + radius,
+                     radius);
+
+        // also save the clickable target box
         targets.at(i).x = topLeft.x + (mWidth * col);
         targets.at(i).y = topLeft.y + (mWidth * row);
         targets.at(i).width = mWidth;
@@ -54,6 +80,7 @@ void MotorManager::mouseReleased(int x, int y, int button){
         if ((x >= t.x && x < (t.x + t.width)) &&
             (y >= t.y && y < (t.y + t.width))) {
             ofLogNotice() << "motor " << i << " clicked";
+            motors.at(i).interact();
         }
     }
 }
