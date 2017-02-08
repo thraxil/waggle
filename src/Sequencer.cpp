@@ -99,6 +99,23 @@ void Sequencer::setup(MotorManager * m) {
 
 
     // NE
+    unsigned NE1steps[16] = {20, 16, 11, 7, // FULL ->
+                             3, 6, 10, 15, // HALF <-
+                             20, 16, 11, 7, // FULL ->
+                             12, 17, 21, 24}; // HALF <-
+    auto NE1_sequence = buildStandardSequence(NE1steps);
+    unsigned NE2steps[16] = {24, 21, 17, 12, // FULL ->
+                             7, 11, 16, 20, // HALF <-
+                             24, 21, 17, 12, // FULL ->
+                             13, 18, 22, 25}; // HALF <-
+    auto NE2_sequence = buildStandardSequence(NE2steps);
+
+    Pattern p1;
+    p1.sequences.push_back(NE1_sequence);
+    p1.sequences.push_back(NE2_sequence);
+
+    patterns[1] = p1;
+
     // E
 
     unsigned E1steps[16] = {9, 10, 11, 12, // FULL ->
@@ -132,6 +149,23 @@ void Sequencer::setup(MotorManager * m) {
     patterns[2] = p2;
 
     // SE
+    unsigned SE1steps[16] = {0, 5, 11, 18, // FULL ->
+                             19, 12, 6, 1, // HALF <-
+                             0, 5, 11, 18, // FULL ->
+                             23, 17, 10, 4}; // HALF <-
+    auto SE1_sequence = buildStandardSequence(SE1steps);
+    unsigned SE2steps[16] = {4, 10, 17, 23, // FULL ->
+                             18, 11, 5, 0, // HALF <-
+                             4, 10, 17, 23, // FULL ->
+                             27, 22, 16, 9}; // HALF <-
+    auto SE2_sequence = buildStandardSequence(SE2steps);
+
+    Pattern p3;
+    p3.sequences.push_back(SE1_sequence);
+    p3.sequences.push_back(SE2_sequence);
+
+    patterns[3] = p3;
+
     // S
     unsigned S1steps[16] = {10, 16, 21, 25, // FULL ->
                             24, 20, 15, 9, // HALF <-
@@ -165,6 +199,21 @@ void Sequencer::setup(MotorManager * m) {
 
     patterns[4] = p4;
     // SW
+    unsigned SW1steps[16] = {3, 6, 10, 15, // FULL ->
+                             14, 9, 5, 2, // HALF <-
+                             3, 6, 10, 15, // FULL ->
+                             20, 16, 11, 7}; // HALF <-
+    auto SW1_sequence = buildStandardSequence(SW1steps);
+    unsigned SW2steps[16] = {7, 11, 16, 20, // FULL ->
+                             15, 10, 6, 3, // HALF <-
+                             7, 11, 16, 20, // FULL ->
+                             24, 21, 17, 12}; // HALF <-
+    auto SW2_sequence = buildStandardSequence(SW2steps);
+
+    Pattern p5;
+    p5.sequences.push_back(SW1_sequence);
+    p5.sequences.push_back(SW2_sequence);
+    patterns[5] = p5;
     // W
 
     unsigned W1steps[16] = {12, 11, 10, 9, // FULL ->
@@ -198,6 +247,21 @@ void Sequencer::setup(MotorManager * m) {
     patterns[6] = p6;
 
     // NW
+    unsigned NW1steps[16] = {18, 11, 5, 0, // FULL ->
+                             1, 6, 12, 19, // HALF <-
+                             18, 11, 5, 0, // FULL ->
+                             4, 10, 17, 23}; // HALF <-
+    auto NW1_sequence = buildStandardSequence(NW1steps);
+    unsigned NW2steps[16] = {23, 17, 10, 4, // FULL ->
+                             0, 5, 11, 18, // HALF <-
+                             23, 17, 10, 4, // FULL ->
+                             9, 16, 22, 27}; // HALF <-
+    auto NW2_sequence = buildStandardSequence(NW2steps);
+
+    Pattern p7;
+    p7.sequences.push_back(NW1_sequence);
+    p7.sequences.push_back(NW2_sequence);
+    patterns[7] = p7;
 }
 
 void Sequencer::update() {
