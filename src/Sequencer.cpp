@@ -29,6 +29,28 @@ Sequence buildStandardSequence(unsigned steps[16]) {
     return s;
 }
 
+Sequence buildLimitedSequence(unsigned full[4], unsigned half1[], unsigned half1N,
+                              unsigned half2[], unsigned half2N) {
+    Sequence s;
+    for (unsigned i=0; i<4; i++) {
+        s.steps.push_back({full[i], MotorState::FULL});
+    }
+
+    for (unsigned i=0; i<half1N; i++) {
+        s.steps.push_back({half1[i], MotorState::HALF});
+    }
+
+    for (unsigned i=0; i<4; i++) {
+        s.steps.push_back({full[i], MotorState::FULL});
+    }
+
+    for (unsigned i=0; i<half2N; i++) {
+        s.steps.push_back({half2[i], MotorState::HALF});
+    }
+
+    return s;
+}
+
 void Sequencer::setup(MotorManager * m) {
     motors = m;
     isRunning = false;
@@ -67,21 +89,114 @@ void Sequencer::setup(MotorManager * m) {
                             7, 12, 18, 23}; // HALF <-
     auto N4_sequence = buildStandardSequence(N4steps);
 
-    Pattern p1;
-    p1.sequences.push_back(N1_sequence);
-    p1.sequences.push_back(N2_sequence);
-    p1.sequences.push_back(N3_sequence);
-    p1.sequences.push_back(N4_sequence);
+    Pattern p0;
+    p0.sequences.push_back(N1_sequence);
+    p0.sequences.push_back(N2_sequence);
+    p0.sequences.push_back(N3_sequence);
+    p0.sequences.push_back(N4_sequence);
 
-    patterns[0] = p1;
+    patterns[0] = p0;
 
 
     // NE
     // E
+
+    unsigned E1steps[16] = {9, 10, 11, 12, // FULL ->
+                            7, 6, 5, 4, // HALF <-
+                            9, 10, 11, 12, // FULL ->
+                            18, 17, 16, 15}; // HALF <-
+    auto E1_sequence = buildStandardSequence(E1steps);
+
+    unsigned E2steps[16] = {15, 16, 17, 18, // FULL ->
+                            12, 11, 10, 9, // HALF <-
+                            15, 16, 17, 18, // FULL ->
+                            23, 22, 21, 20}; // HALF <-
+    auto E2_sequence = buildStandardSequence(E2steps);
+
+    unsigned E3full[4] = {10, 11, 12, 13};
+    unsigned E3half1[3] = {7, 6, 5};
+    unsigned E3half2[4] = {19, 18, 17, 16};
+    auto E3_sequence = buildLimitedSequence(E3full, E3half1, 3, E3half2, 4);
+
+    unsigned E4full[4] = {16, 17, 18, 19};
+    unsigned E4half1[4] = {13, 12, 11, 10};
+    unsigned E4half2[3] = {23, 22, 21};
+    auto E4_sequence = buildLimitedSequence(E4full, E4half1, 4, E4half2, 3);
+
+    Pattern p2;
+    p2.sequences.push_back(E1_sequence);
+    p2.sequences.push_back(E2_sequence);
+    p2.sequences.push_back(E3_sequence);
+    p2.sequences.push_back(E4_sequence);
+
+    patterns[2] = p2;
+
     // SE
     // S
+    unsigned S1steps[16] = {10, 16, 21, 25, // FULL ->
+                            24, 20, 15, 9, // HALF <-
+                            10, 16, 21, 25, // FULL ->
+                            26, 22, 17, 11}; // HALF <-
+    auto S1_sequence = buildStandardSequence(S1steps);
+
+    unsigned S2steps[16] = {11, 17, 22, 26, // FULL ->
+                            25, 21, 16, 10, // HALF <-
+                            11, 17, 22, 26, // FULL ->
+                            27, 23, 18, 12}; // HALF <-
+    auto S2_sequence = buildStandardSequence(S2steps);
+
+    unsigned S3steps[16] = {5, 10, 16, 21, // FULL ->
+                            20, 15, 9, 4, // HALF <-
+                            5, 10, 16, 21, // FULL ->
+                            22, 17, 11, 6}; // HALF <-
+    auto S3_sequence = buildStandardSequence(S3steps);
+
+    unsigned S4steps[16] = {6, 11, 17, 22, // FULL ->
+                            21, 16, 10, 5, // HALF <-
+                            6, 11, 17, 22, // FULL ->
+                            23, 18, 12, 7}; // HALF <-
+    auto S4_sequence = buildStandardSequence(S4steps);
+
+    Pattern p4;
+    p4.sequences.push_back(S1_sequence);
+    p4.sequences.push_back(S2_sequence);
+    p4.sequences.push_back(S3_sequence);
+    p4.sequences.push_back(S4_sequence);
+
+    patterns[4] = p4;
     // SW
     // W
+
+    unsigned W1steps[16] = {12, 11, 10, 9, // FULL ->
+                            4, 5, 6, 7, // HALF <-
+                            12, 11, 10, 9, // FULL ->
+                            15, 16, 17, 18}; // HALF <-
+    auto W1_sequence = buildStandardSequence(W1steps);
+
+    unsigned W2steps[16] = {18, 17, 16, 15, // FULL ->
+                            9, 10, 11, 12, // HALF <-
+                            18, 17, 16, 15,// FULL ->
+                            20, 21, 22, 23}; // HALF <-
+    auto W2_sequence = buildStandardSequence(W2steps);
+
+    unsigned W3full[4] = {11, 10, 9, 8};
+    unsigned W3half1[3] = {4, 5, 6};
+    unsigned W3half2[4] = {14, 15, 16, 17};
+    auto W3_sequence = buildLimitedSequence(W3full, W3half1, 3, W3half2, 4);
+
+    unsigned W4full[4] = {17, 16, 15, 14};
+    unsigned W4half1[4] = {8, 9, 10, 11};
+    unsigned W4half2[3] = {20, 21, 22};
+    auto W4_sequence = buildLimitedSequence(W4full, W4half1, 4, W4half2, 3);
+
+    Pattern p6;
+    p6.sequences.push_back(W1_sequence);
+    p6.sequences.push_back(W2_sequence);
+    p6.sequences.push_back(W3_sequence);
+    p6.sequences.push_back(W4_sequence);
+
+    patterns[6] = p6;
+
     // NW
 }
 
