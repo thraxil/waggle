@@ -125,7 +125,6 @@ void Sequencer::update() {
     }
     auto currentTime = ofGetElapsedTimeMillis();
     if (currentTime > nextStepTime) {
-        step++;
         nextStepTime += 1000;
         auto idx = step % currentSequence.steps.size();
         ofLogNotice() << idx;
@@ -133,6 +132,7 @@ void Sequencer::update() {
         ofLogNotice() << s.motor;
         motors->allOff();
         motors->setMotorState(s.motor, s.state);
+        step++;
     }
 }
 
