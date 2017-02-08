@@ -77,6 +77,12 @@ void MotorManager::mouseReleased(int x, int y, int button){
     }
 }
 
+void MotorManager::allOff() {
+    for (auto & motor : motors) {
+        motor.setState(MotorState::OFF);
+    }
+}
+
 void MotorManager::setMotorState(int idx, MotorState ms) {
     motors.at(idx).setState(ms);
 }
