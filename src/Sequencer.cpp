@@ -1,4 +1,5 @@
 #include "Sequencer.h"
+#define STEP_TIME 100
 
 Sequencer::Sequencer() {
 }
@@ -90,7 +91,7 @@ void Sequencer::update() {
     }
     auto currentTime = ofGetElapsedTimeMillis();
     if (currentTime > nextStepTime) {
-        nextStepTime += 1000;
+        nextStepTime += STEP_TIME;
         auto idx = step % currentSequence.steps.size();
         ofLogNotice() << idx;
         auto s = currentSequence.steps.at(idx);
