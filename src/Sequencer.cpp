@@ -5,7 +5,7 @@ Sequencer::Sequencer() {
 
 // normal 4 full, 4 half, 4 full, 4 weak sequence
 Sequence buildStandardSequence(unsigned steps[16]) {
-    Sequence s;    
+    Sequence s;
     s.steps.push_back({steps[0], MotorState::FULL});
     s.steps.push_back({steps[1], MotorState::FULL});
     s.steps.push_back({steps[2], MotorState::FULL});
@@ -59,13 +59,13 @@ void Sequencer::setup(MotorManager * m) {
                             21, 16, 10, 5, // FULL ->
                             6, 11, 17, 22}; // HALF <-
     auto N3_sequence = buildStandardSequence(N3steps);
-    
+
     unsigned N4steps[16] = {22, 17, 11, 6, // FULL ->
                             5, 10, 16, 21, // HALF <-
                             22, 17, 11, 6, // FULL ->
                             7, 12, 18, 23}; // HALF <-
     auto N4_sequence = buildStandardSequence(N4steps);
-    
+
     Pattern p1;
     p1.sequences.push_back(N1_sequence);
     p1.sequences.push_back(N2_sequence);
