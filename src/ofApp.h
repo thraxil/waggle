@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "GoalManager.h"
 #include "MotorManager.h"
+#include "Sequencer.h"
 
 #define NBALLS 10
 
@@ -30,4 +31,5 @@ class ofApp : public ofBaseApp{
 		
 		GoalManager goals;
 		MotorManager motors;
+		Sequencer sequencer;
 };

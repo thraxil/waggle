@@ -10,6 +10,7 @@ class Motor {
 		Motor();
 		MotorState getState();
 		void interact();
+		void setState(MotorState);
 
  private:
 		int idx;

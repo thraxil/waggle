@@ -18,5 +18,9 @@ MotorState Motor::getState() {
 }
 
 void Motor::interact() {
-    state = stateTransitions[state];
+    setState(stateTransitions[state]);
+}
+
+void Motor::setState(MotorState ms) {
+    state = ms;
 }

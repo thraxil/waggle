@@ -4,7 +4,9 @@
 GoalManager::GoalManager() {
 }
 
-void GoalManager::setup(int ngoals) {
+void GoalManager::setup(int ngoals, Sequencer * _sequencer) {
+    sequencer = _sequencer;
+    ofLogNotice() << "goalmanager sequencer: " << sequencer;
     for (int i=0; i < ngoals; i++) {
         Goal g;
         g.setup(i);
@@ -57,6 +59,9 @@ void GoalManager::mouseReleased(int x, int y, int button){
             clearAll();
             if (!isTarget) {
                 goals.at(i).select();
+                sequencer->start(i);
+            } else {
+                sequencer->stop();
             }
         }
     }

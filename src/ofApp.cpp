@@ -12,12 +12,18 @@ void ofApp::setup(){
     ofSetCircleResolution(50);
     ofEnableAntiAliasing();
 
-    goals.setup(NGOALS);
     motors.setup();
+    sequencer.setup(&motors);
+    goals.setup(NGOALS, &sequencer);
+
+    ofLogNotice() << "ofApp sequencer: " << &sequencer;
+    ofLogNotice() << "ofApp motors: " << &motors;
+    ofLogNotice() << "ofApp goals: " << &goals;    
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    sequencer.update();
 }
 
 //--------------------------------------------------------------
