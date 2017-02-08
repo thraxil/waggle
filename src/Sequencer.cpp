@@ -5,8 +5,6 @@ Sequencer::Sequencer() {
 
 void Sequencer::setup(MotorManager * m) {
     motors = m;
-    ofLogNotice() << "Sequencer m: " << m;    
-    ofLogNotice() << "Sequencer motors: " << motors;
     isRunning = false;
     
     // define the patterns. remember, motors:
