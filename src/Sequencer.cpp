@@ -42,7 +42,7 @@ void Sequencer::setup(MotorManager * m) {
 
     // ------ North ------
 
-n    unsigned N1steps[16] = {16, 10, 5, 1, // FULL ->
+    unsigned N1steps[16] = {16, 10, 5, 1, // FULL ->
                             0, 4, 9, 15, // HALF <-
                             16, 10, 5, 1, // FULL ->
                             2, 6, 11, 17}; // HALF <-
