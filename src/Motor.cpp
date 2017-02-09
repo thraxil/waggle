@@ -34,7 +34,7 @@ std::string stateString(MotorState ms) {
 
 void Motor::setState(MotorState ms) {
     if (state != ms) {
-        ofLogNotice() << "motor[" << idx << "] " << stateString(state) << " to " << stateString(ms);
+//        ofLogNotice() << "motor[" << idx << "] " << stateString(state) << " to " << stateString(ms);
         state = ms;
     }
 }

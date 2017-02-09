@@ -16,11 +16,13 @@ void ofApp::setup(){
     sequencer.setup(&motors);
     goals.setup(NGOALS, &sequencer);
 
-    goalSelected = -1;
+    goalSelected = -1; // which one the player has chosen
+    goalTargeted = -1; // the "correct" one
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    goalTargeted = goals.getTargetGoal();
     sequencer.update();
 }
 
@@ -47,7 +49,7 @@ void ofApp::draw(){
     int rows = 6;
     int cols = 6;
     int mWidth = dim / rows;
-    ofVec2f topLeft(center.x - (mWidth * 3), center.y - (mWidth * 3));    
+    ofVec2f topLeft(center.x - (mWidth * 3), center.y - (mWidth * 3));
     drawGrid(rows, cols, center, topLeft, dim, mWidth);
 
     // finally, the motors
@@ -84,9 +86,44 @@ void ofApp::keyPressed(int key){
     if (key >= '0' && key <= '7') {
         // simulate a goal selection
         goalSelected = key - '0';
-        ofLogNotice() << goalSelected;
         goals.select(goalSelected);
+        if (goalTargeted > -1) {
+            // there's a target goal, so we're "playing"
+            if (goalTargeted == goalSelected) {
+                // CORRECT!
+                win();
+            } else {
+                // BZZT! Wrong!
+                lose();
+            }
+        } else {
+            // no goal was targeted, so just treat this as
+            // debugging
+        }
     }
+}
+
+void ofApp::win() {
+    ofLogNotice() << "correct goal selected! you've got pollen!";
+    // show animation
+    // play sound
+    newGame();
+}
+
+void ofApp::lose() {
+    ofLogNotice() << "wrong goal! no pollen for you!";
+    // show animation
+    // pay sound
+    newGame();
+}
+
+void ofApp::newGame() {
+    ofLogNotice() << "starting new game";
+    // pick a random goal
+    auto g = std::rand() % NGOALS;
+    goals.selectTarget(g);
+    goals.unselectAll();
+    sequencer.start(g);
 }
 
 //--------------------------------------------------------------

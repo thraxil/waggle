@@ -14,6 +14,11 @@ void GoalManager::setup(int ngoals, Sequencer * _sequencer) {
         GoalTarget t;
         targets.push_back(t);
     }
+    targetGoal = -1;
+}
+
+int GoalManager::getTargetGoal() {
+    return targetGoal;
 }
 
 void GoalManager::update() {
@@ -22,7 +27,6 @@ void GoalManager::update() {
 void GoalManager::draw(ofVec2f center, float radius) {
     auto step = 360.0 / goals.size();
     auto size = GOAL_SCALE * radius;
-
 
     for (unsigned int i=0; i<goals.size(); i++) {
         auto angle = ofDegToRad((i * step) - 90);
@@ -64,9 +68,11 @@ void GoalManager::mouseReleased(int x, int y, int button){
             auto isTarget = goals.at(i).getIsTarget();
             clearAll();
             if (!isTarget) {
+                targetGoal = i;
                 goals.at(i).selectTarget();
                 sequencer->start(i);
             } else {
+                targetGoal = -1;
                 sequencer->stop();
             }
         }
@@ -79,9 +85,19 @@ void GoalManager::clearAll() {
     }
 }
 
+void GoalManager::selectTarget(int g) {
+    clearAll();
+    goals.at(g).selectTarget();
+    targetGoal = g;
+}
+
 void GoalManager::select(int g) {
+    unselectAll();
+    goals.at(g).select();
+}
+
+void GoalManager::unselectAll() {
     for (auto & goal : goals) {
         goal.unselect();
     }
-    goals.at(g).select();
 }

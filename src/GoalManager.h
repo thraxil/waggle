@@ -6,23 +6,27 @@
 #include "Sequencer.h"
 
 struct GoalTarget {
-		int x, y;
-		float radius;
+    int x, y;
+    float radius;
 };
 
 class GoalManager {
-public:
+ public:
     void setup(int, Sequencer *);
     void update();
     void draw(ofVec2f center, float radius);
-		void mouseReleased(int x, int y, int button);
-		void clearAll();
-		void select(int);
+    void mouseReleased(int x, int y, int button);
+    void clearAll();
+    void unselectAll();
+    void select(int);
+    void selectTarget(int);
+    int getTargetGoal();
 
-		GoalManager();
+    GoalManager();
  private:
-		vector <Goal> goals;
-		vector <GoalTarget> targets;
-		Sequencer * sequencer;
+    vector <Goal> goals;
+    vector <GoalTarget> targets;
+    Sequencer * sequencer;
+    int targetGoal;
 };
 #endif

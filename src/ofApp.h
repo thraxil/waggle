@@ -28,10 +28,14 @@ class ofApp : public ofBaseApp{
  private:
 		void drawBoundaryCircle(ofVec2f center, float radius);
 		void drawGrid(int rows, int cols, ofVec2f center, ofVec2f topLeft, float dim, int mWidth);
+		void win();
+		void lose();
+		void newGame();
 		
 		GoalManager goals;
 		MotorManager motors;
 		Sequencer sequencer;
 
 		int goalSelected;
+		int goalTargeted;		
 };
