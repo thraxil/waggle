@@ -18,10 +18,15 @@ void ofApp::setup(){
 
     goalSelected = -1; // which one the player has chosen
     goalTargeted = -1; // the "correct" one
+
+    // serial setup
+    serial_reader = new SerialReader();
+    serial_reader->setup();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    serial_reader->update();
     goalTargeted = goals.getTargetGoal();
     sequencer.update();
 }

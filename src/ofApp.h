@@ -4,6 +4,7 @@
 #include "GoalManager.h"
 #include "MotorManager.h"
 #include "Sequencer.h"
+#include "SerialReader.h"
 
 class ofApp : public ofBaseApp{
 
@@ -33,6 +34,7 @@ class ofApp : public ofBaseApp{
 		GoalManager goals;
 		MotorManager motors;
 		Sequencer sequencer;
+		SerialReader *serial_reader;
 
 		int goalSelected;
 		int goalTargeted;		
