@@ -22,6 +22,9 @@ void ofApp::setup(){
     // serial setup
     serial_reader = new SerialReader();
     serial_reader->setup();
+
+    winSound.loadSound("win.wav");
+    loseSound.loadSound("lose.wav");    
 }
 
 //--------------------------------------------------------------
@@ -112,6 +115,7 @@ void ofApp::win() {
     ofLogNotice() << "correct goal selected! you've got pollen!";
     // show animation
     // play sound
+    winSound.play();
     newGame();
 }
 
@@ -119,6 +123,7 @@ void ofApp::lose() {
     ofLogNotice() << "wrong goal! no pollen for you!";
     // show animation
     // pay sound
+    loseSound.play();
     newGame();
 }
 

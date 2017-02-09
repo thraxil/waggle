@@ -36,6 +36,9 @@ class ofApp : public ofBaseApp{
 		Sequencer sequencer;
 		SerialReader *serial_reader;
 
+		ofSoundPlayer winSound;
+		ofSoundPlayer loseSound;
+
 		int goalSelected;
 		int goalTargeted;		
 };
