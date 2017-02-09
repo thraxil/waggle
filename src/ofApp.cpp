@@ -15,10 +15,6 @@ void ofApp::setup(){
     motors.setup();
     sequencer.setup(&motors);
     goals.setup(NGOALS, &sequencer);
-
-    ofLogNotice() << "ofApp sequencer: " << &sequencer;
-    ofLogNotice() << "ofApp motors: " << &motors;
-    ofLogNotice() << "ofApp goals: " << &goals;    
 }
 
 //--------------------------------------------------------------

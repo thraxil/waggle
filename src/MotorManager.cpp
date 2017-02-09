@@ -71,7 +71,6 @@ void MotorManager::mouseReleased(int x, int y, int button){
         auto t = targets.at(i);
         if ((x >= t.x && x < (t.x + t.width)) &&
             (y >= t.y && y < (t.y + t.width))) {
-            ofLogNotice() << "motor " << i << " clicked";
             motors.at(i).interact();
         }
     }

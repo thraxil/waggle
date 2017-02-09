@@ -272,9 +272,7 @@ void Sequencer::update() {
     if (currentTime > nextStepTime) {
         nextStepTime += STEP_TIME;
         auto idx = step % currentSequence.steps.size();
-        ofLogNotice() << idx;
         auto s = currentSequence.steps.at(idx);
-        ofLogNotice() << s.motor;
         motors->allOff();
         motors->setMotorState(s.motor, s.state);
         step++;

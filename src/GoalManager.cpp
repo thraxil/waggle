@@ -6,7 +6,6 @@ GoalManager::GoalManager() {
 
 void GoalManager::setup(int ngoals, Sequencer * _sequencer) {
     sequencer = _sequencer;
-    ofLogNotice() << "goalmanager sequencer: " << sequencer;
     for (int i=0; i < ngoals; i++) {
         Goal g;
         g.setup(i);
