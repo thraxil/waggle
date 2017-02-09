@@ -1,8 +1,8 @@
 #include "ofApp.h"
 
-#define BOUNDARY_CIRCLE_SCALE 0.9
-#define MOTOR_GRID_SCALE 0.6
-#define NGOALS 8
+const float BoundaryCircleScale = 0.9;
+const float MotorGridScale = 0.6;
+const int NGoals = 8;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -14,7 +14,7 @@ void ofApp::setup(){
 
     motors.setup();
     sequencer.setup(&motors);
-    goals.setup(NGOALS, &sequencer);
+    goals.setup(NGoals, &sequencer);
 
     goalSelected = -1; // which one the player has chosen
     goalTargeted = -1; // the "correct" one
@@ -36,7 +36,7 @@ void ofApp::draw(){
     auto bound = std::min(width, height);
 
     ofVec2f center(width / 2, height / 2);
-    auto radius = (bound / 2) * BOUNDARY_CIRCLE_SCALE;
+    auto radius = (bound / 2) * BoundaryCircleScale;
 
     // draw a big ol circle
     drawBoundaryCircle(center, radius);
@@ -45,7 +45,7 @@ void ofApp::draw(){
     goals.draw(center, radius);
 
     // draw the motor grid
-    auto dim = MOTOR_GRID_SCALE * bound;
+    auto dim = MotorGridScale * bound;
     int rows = 6;
     int cols = 6;
     int mWidth = dim / rows;
@@ -120,7 +120,7 @@ void ofApp::lose() {
 void ofApp::newGame() {
     ofLogNotice() << "starting new game";
     // pick a random goal
-    auto g = std::rand() % NGOALS;
+    auto g = std::rand() % NGoals;
     goals.selectTarget(g);
     goals.unselectAll();
     sequencer.start(g);

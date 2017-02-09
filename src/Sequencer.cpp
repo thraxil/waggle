@@ -1,5 +1,6 @@
 #include "Sequencer.h"
-#define STEP_TIME 100
+
+const int StepTime = 100;
 
 Sequencer::Sequencer() {
 }
@@ -270,7 +271,7 @@ void Sequencer::update() {
     }
     auto currentTime = ofGetElapsedTimeMillis();
     if (currentTime > nextStepTime) {
-        nextStepTime += STEP_TIME;
+        nextStepTime += StepTime;
         auto idx = step % currentSequence.steps.size();
         auto s = currentSequence.steps.at(idx);
         motors->allOff();

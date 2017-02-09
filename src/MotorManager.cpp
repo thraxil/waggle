@@ -1,14 +1,15 @@
 #include "MotorManager.h"
-#define NMOTORS 28
 
-const int rows[NMOTORS] = {0, 0, 0, 0,
+const unsigned NMotors = 28;
+
+const int rows[NMotors] = {0, 0, 0, 0,
                            1, 1, 1, 1,
                         2, 2, 2, 2, 2, 2,
                         3, 3, 3, 3, 3, 3,
                            4, 4, 4, 4,
                            5, 5, 5, 5};
 
-const int cols[NMOTORS] = {1, 2, 3, 4,
+const int cols[NMotors] = {1, 2, 3, 4,
                            1, 2, 3, 4,
                         0, 1, 2, 3, 4, 5,
                         0, 1, 2, 3, 4, 5,
@@ -20,7 +21,7 @@ MotorManager::MotorManager() {
 
 void MotorManager::setup() {
     // layout row/column for each motor
-    for (int i=0; i<NMOTORS; i++) {
+    for (unsigned i=0; i<NMotors; i++) {
         Motor m;
         m.setup(i);
         motors.push_back(m);

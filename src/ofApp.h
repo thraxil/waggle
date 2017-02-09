@@ -5,8 +5,6 @@
 #include "MotorManager.h"
 #include "Sequencer.h"
 
-#define NBALLS 10
-
 class ofApp : public ofBaseApp{
 
 	public:

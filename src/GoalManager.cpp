@@ -1,5 +1,6 @@
 #include "GoalManager.h"
-#define GOAL_SCALE 0.05
+
+const float GoalScale = 0.05;
 
 GoalManager::GoalManager() {
 }
@@ -26,7 +27,7 @@ void GoalManager::update() {
 
 void GoalManager::draw(ofVec2f center, float radius) {
     auto step = 360.0 / goals.size();
-    auto size = GOAL_SCALE * radius;
+    auto size = GoalScale * radius;
 
     for (unsigned int i=0; i<goals.size(); i++) {
         auto angle = ofDegToRad((i * step) - 90);
