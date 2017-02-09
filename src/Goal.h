@@ -8,12 +8,16 @@ public:
     int idx;
 
     void setup(int _idx);
-		void select();
-		void unselect();
+		void selectTarget();
+		void unselectTarget();
 		bool getIsTarget();
-
+		void select();
+		void unselect();		
+		bool getIsSelected();
+		
     Goal();
  private:
 		bool isTarget;
+		bool isSelected;
 };
 #endif

@@ -29,6 +29,14 @@ void GoalManager::draw(ofVec2f center, float radius) {
         auto x = center.x + (cos(angle) * radius);
         auto y = center.y + (sin(angle) * radius);
         auto goal = goals.at(i);
+        if (goal.getIsSelected()) {
+            ofFill();
+            ofSetColor(ofColor::yellow);
+            ofDrawCircle(x, y, size * 1.3);
+            ofNoFill();
+            ofSetColor(ofColor::black);
+            ofDrawCircle(x, y, size * 1.3);
+        }
         ofFill();
         if (goal.getIsTarget()) {
             ofSetColor(ofColor::orange);
@@ -53,11 +61,10 @@ void GoalManager::mouseReleased(int x, int y, int button){
         auto t = targets.at(i);
         auto distance = ofDist(x, y, t.x, t.y);
         if (distance < t.radius) {
-            ofLogNotice() << "goal " << i << " clicked";
             auto isTarget = goals.at(i).getIsTarget();
             clearAll();
             if (!isTarget) {
-                goals.at(i).select();
+                goals.at(i).selectTarget();
                 sequencer->start(i);
             } else {
                 sequencer->stop();
@@ -68,6 +75,13 @@ void GoalManager::mouseReleased(int x, int y, int button){
 
 void GoalManager::clearAll() {
     for (auto & goal : goals) {
+        goal.unselectTarget();
+    }
+}
+
+void GoalManager::select(int g) {
+    for (auto & goal : goals) {
         goal.unselect();
     }
+    goals.at(g).select();
 }

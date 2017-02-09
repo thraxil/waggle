@@ -15,6 +15,8 @@ void ofApp::setup(){
     motors.setup();
     sequencer.setup(&motors);
     goals.setup(NGOALS, &sequencer);
+
+    goalSelected = -1;
 }
 
 //--------------------------------------------------------------
@@ -77,7 +79,14 @@ void ofApp::drawGrid(int rows, int cols, ofVec2f center, ofVec2f topLeft, float 
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    // this won't work once we have more than 10 goals,
+    // but for now...
+    if (key >= '0' && key <= '7') {
+        // simulate a goal selection
+        goalSelected = key - '0';
+        ofLogNotice() << goalSelected;
+        goals.select(goalSelected);
+    }
 }
 
 //--------------------------------------------------------------

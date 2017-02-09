@@ -32,4 +32,6 @@ class ofApp : public ofBaseApp{
 		GoalManager goals;
 		MotorManager motors;
 		Sequencer sequencer;
+
+		int goalSelected;
 };
