@@ -23,6 +23,8 @@ void ofApp::setup(){
     serial_reader = new SerialReader();
     serial_reader->setup();
 
+    music.loadSound("honey_for_the_drones.mp3");
+    music.play();
     winSound.loadSound("win.wav");
     loseSound.loadSound("lose.wav");    
 }
