@@ -1,7 +1,5 @@
 #include "Sequencer.h"
 
-const int StepTime = 100;
-
 Sequencer::Sequencer() {
 }
 
@@ -56,6 +54,7 @@ void Sequencer::setup(MotorManager * m) {
     motors = m;
     isRunning = false;
     isPaused = false;
+    StepTime = 100;
 
     // define the patterns. remember, motors:
     //             -  0  1  2  3  -
@@ -300,4 +299,14 @@ void Sequencer::stop() {
 
 void Sequencer::togglePause() {
     isPaused = !isPaused;
+}
+
+void Sequencer::speedUp() {
+    StepTime *= .9;
+    ofLogNotice() << StepTime;
+}
+
+void Sequencer::speedDown() {
+    StepTime *= 1.1;
+    ofLogNotice() << StepTime;
 }

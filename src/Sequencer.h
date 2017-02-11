@@ -25,6 +25,8 @@ class Sequencer {
     void start(int);
     void stop();
     void togglePause();
+		void speedUp();
+		void speedDown();
 
     Sequencer();
  private:
@@ -35,6 +37,7 @@ class Sequencer {
     float nextStepTime;
     int goal;
     int step;
+		int StepTime;
     Sequence currentSequence;
     std::map <int, Pattern> patterns;
 };

@@ -97,6 +97,14 @@ void ofApp::keyPressed(int key){
         isPaused = !isPaused;
         sequencer.togglePause();
     }
+    // speed controls
+    if (key == '+') {
+        sequencer.speedUp();
+    }
+    if (key == '-') {
+        sequencer.speedDown();
+    }
+
     // this won't work once we have more than 10 goals,
     // but for now...
     if (key >= '0' && key <= '7') {
