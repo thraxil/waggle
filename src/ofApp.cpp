@@ -26,7 +26,7 @@ void ofApp::setup(){
     music.loadSound("honey_for_the_drones.mp3");
     music.play();
     winSound.loadSound("win.wav");
-    loseSound.loadSound("lose.wav");    
+    loseSound.loadSound("lose.wav");
 }
 
 //--------------------------------------------------------------
