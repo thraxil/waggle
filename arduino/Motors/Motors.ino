@@ -8,24 +8,44 @@ int dataPin = 11;
 
 
 void setup() {
-		pinMode(latchPin, OUTPUT);
-		pinMode(clockPin, OUTPUT);
-		pinMode(dataPin, OUTPUT);
+    pinMode(latchPin, OUTPUT);
+    pinMode(clockPin, OUTPUT);
+    pinMode(dataPin, OUTPUT);
 }
 
-void loop() {
-		// count from 0 to 255 and display the number
-		// on the LEDs
-		for (int numberToDisplay = 0; numberToDisplay < 256; numberToDisplay++) {
-				// take the latchPin low so
-				// the LEDs don't change while you're sending in bits:
-				digitalWrite(latchPin, LOW);
-				// shift out the bits:
-				shiftOut(dataPin, clockPin, MSBFIRST, numberToDisplay);
 
-				//take the latch pin high so the LEDs will light up:
-				digitalWrite(latchPin, HIGH);
-				// pause before next value:
-				delay(500);
-		}
+void registerWrite(int whichPin, int whichState) {
+		// the bits you want to send
+		byte bitsToSend = 0;
+
+		// turn off the output so the pins don't light up during the shift
+		digitalWrite(latchPin, LOW);
+
+		// turn on the next highest bit in bitsToSend:
+		bitWrite(bitsToSend, whichPin, whichState);
+
+		// shift the bits out:
+		shiftOut(dataPin, clockPin, MSBFIRST, bitsToSend);
+
+    // ship it
+		digitalWrite(latchPin, HIGH);
+}
+
+void motorOn(int motor) {
+		registerWrite(motor, HIGH);
+}
+
+void motorOff(int motor) {
+		registerWrite(motor, LOW);
+}
+
+
+void loop() {
+    // count from 0 to 255 and display the number
+    // on the LEDs
+    for (int numberToDisplay = 0; numberToDisplay < 256; numberToDisplay++) {
+				motorOn(numberToDisplay);
+        delay(500);
+				motorOff(numberToDisplay);
+    }
 }
