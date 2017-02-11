@@ -77,7 +77,7 @@ void checkSerial() {
         Serial.print("USB received: ");
         Serial.println(incomingByte, DEC);
 
-        // mask off lower five bytes for the motor
+        // mask off lower five bits for the motor
         motor = incomingByte & MOTOR_FLAG;
 
 				Serial.print("MOTOR: ");
