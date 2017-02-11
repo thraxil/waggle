@@ -24,6 +24,7 @@ class ofApp : public ofBaseApp{
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
+		void selectGoal();
  private:
     void drawBoundaryCircle(ofVec2f center, float radius);
     void drawGrid(int rows, int cols, ofVec2f center, ofVec2f topLeft, float dim, int mWidth);

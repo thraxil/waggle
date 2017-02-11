@@ -2,16 +2,14 @@
 #define _SERIALREADER
 
 #include "ofMain.h"
-#include "GoalManager.h"
 
 class SerialReader {
  public:
 		SerialReader();
-		void setup(GoalManager *);
-		void update();
+		void setup();
+		int update();
 
 		ofSerial * serial;
-		GoalManager *goals;
 };
 
 #endif

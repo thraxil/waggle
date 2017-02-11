@@ -21,7 +21,7 @@ void ofApp::setup(){
 
     // serial setup
     serial_reader = new SerialReader();
-    serial_reader->setup(&goals);
+    serial_reader->setup();
 
 //    music.loadSound("honey_for_the_drones.mp3");
 //    music.play();
@@ -33,9 +33,10 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    serial_reader->update();
+    goalSelected = serial_reader->update();
     goalTargeted = goals.getTargetGoal();
     sequencer.update();
+    selectGoal();
 }
 
 //--------------------------------------------------------------
@@ -110,20 +111,26 @@ void ofApp::keyPressed(int key){
     if (key >= '0' && key <= '7') {
         // simulate a goal selection
         goalSelected = key - '0';
-        goals.select(goalSelected);
-        if (goalTargeted > -1) {
-            // there's a target goal, so we're "playing"
-            if (goalTargeted == goalSelected) {
-                // CORRECT!
-                win();
-            } else {
-                // BZZT! Wrong!
-                lose();
-            }
+    }
+}
+
+void ofApp::selectGoal() {
+    if (goalSelected == -1) {
+        return;
+    }
+    goals.select(goalSelected);
+    if (goalTargeted > -1) {
+        // there's a target goal, so we're "playing"
+        if (goalTargeted == goalSelected) {
+            // CORRECT!
+            win();
         } else {
-            // no goal was targeted, so just treat this as
-            // debugging
+            // BZZT! Wrong!
+            lose();
         }
+    } else {
+        // no goal was targeted, so just treat this as
+        // debugging
     }
 }
 
