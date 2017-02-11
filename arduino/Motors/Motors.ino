@@ -1,5 +1,7 @@
 #define N_MOTORS 28
-#define BLINK_INTERVAL 400
+#define BLINK_INTERVAL 100
+#define ON_DELAY 4
+#define OFF_DELAY 1
 
 // motor states
 #define OFF 0
@@ -78,11 +80,16 @@ void checkSerial() {
         // mask off lower five bytes for the motor
         motor = incomingByte & MOTOR_FLAG;
 
+				Serial.print("MOTOR: ");
+				Serial.println(motor);
         if (incomingByte & PROTO_ON) {
+						Serial.println("ON");
             motorStates[motor] = ON;
         } else if (incomingByte & PROTO_HALF) {
+						Serial.println("HALF");
             motorStates[motor] = HALF;
         } else if (incomingByte & PROTO_OFF) {
+						Serial.println("OFF");
             motorStates[motor] = OFF;
         } else {
             // one of those flags must be set
@@ -96,15 +103,21 @@ void checkSerial() {
 void blinkMotors() {
     for (int i=0; i < N_MOTORS; i++) {
         motorCounters[i]++;
+				if (motorCounters[i] > (2 * BLINK_INTERVAL)) {
+						motorCounters[i] = 0;
+				}
         if (motorStates[i] == ON) {
             // on is on
             motorOn(i);
+						delay(ON_DELAY);
         } else if (motorStates[i] == HALF) {
             // blink logic
             if (motorCounters[i] < BLINK_INTERVAL) {
                 motorOn(i);
+								delay(ON_DELAY);
             } else if (motorCounters[i] >= BLINK_INTERVAL && motorCounters[i] < (2 * BLINK_INTERVAL)) {
                 motorOff(i);
+								delay(OFF_DELAY);
             }
         } else {
             // otherwise it's off
@@ -114,13 +127,14 @@ void blinkMotors() {
 }
 
 void loop() {
-    //    checkSerial();
+		checkSerial();
 
-    //    blinkMotors();
+		blinkMotors();
     // purely for debugging:
-    for (int numberToDisplay = 0; numberToDisplay < 8; numberToDisplay++) {
-        motorOn(numberToDisplay);
-        delay(500);
-        motorOff(numberToDisplay);
-    }
+    /* for (int numberToDisplay = 0; numberToDisplay < 1; numberToDisplay++) { */
+    /*     motorOn(numberToDisplay); */
+    /*     delay(250); */
+    /*     motorOff(numberToDisplay); */
+		/* 		delay(250); */
+    /* } */
 }
