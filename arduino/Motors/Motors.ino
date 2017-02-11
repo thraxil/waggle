@@ -24,36 +24,36 @@ void setup() {
     pinMode(clockPin, OUTPUT);
     pinMode(dataPin, OUTPUT);
 
-		for (int i=0; i < N_MOTORS; i++) {
-				motorStates[i] = 0;
-				motorCounters[i] = 0;
-		}
+    for (int i=0; i < N_MOTORS; i++) {
+        motorStates[i] = 0;
+        motorCounters[i] = 0;
+    }
 }
 
 
 void registerWrite(int whichPin, int whichState) {
-		// the bits you want to send
-		byte bitsToSend = 0;
+    // the bits you want to send
+    byte bitsToSend = 0;
 
-		// turn off the output so the pins don't light up during the shift
-		digitalWrite(latchPin, LOW);
+    // turn off the output so the pins don't light up during the shift
+    digitalWrite(latchPin, LOW);
 
-		// turn on the next highest bit in bitsToSend:
-		bitWrite(bitsToSend, whichPin, whichState);
+    // turn on the next highest bit in bitsToSend:
+    bitWrite(bitsToSend, whichPin, whichState);
 
-		// shift the bits out:
-		shiftOut(dataPin, clockPin, MSBFIRST, bitsToSend);
+    // shift the bits out:
+    shiftOut(dataPin, clockPin, MSBFIRST, bitsToSend);
 
     // ship it
-		digitalWrite(latchPin, HIGH);
+    digitalWrite(latchPin, HIGH);
 }
 
 void motorOn(int motor) {
-		registerWrite(motor, HIGH);
+    registerWrite(motor, HIGH);
 }
 
 void motorOff(int motor) {
-		registerWrite(motor, LOW);
+    registerWrite(motor, LOW);
 }
 
 /*************************
@@ -64,63 +64,63 @@ A message is just one char
 the lower 5 bits specify the motor
 the upper three bits are flags for ON/HALF/FULL. only one of them can be set.
 
- ************************/
+************************/
 
 void checkSerial() {
-		unsigned char incomingByte;
-		int motor;
-		if (Serial.available() > 0) {
-				incomingByte = Serial.read();
+    unsigned char incomingByte;
+    int motor;
+    if (Serial.available() > 0) {
+        incomingByte = Serial.read();
 
-				Serial.print("USB received: ");
-				Serial.println(incomingByte, DEC);
+        Serial.print("USB received: ");
+        Serial.println(incomingByte, DEC);
 
-				// mask off lower five bytes for the motor
-				motor = incomingByte & MOTOR_FLAG;
-				
-				if (incomingByte & PROTO_ON) {
-						motorStates[motor] = ON;
-				} else if (incomingByte & PROTO_HALF) {
-						motorStates[motor] = HALF;
-				} else if (incomingByte & PROTO_OFF) {
-						motorStates[motor] = OFF;
-				} else {
-						// one of those flags must be set
-						Serial.print("received invalid byte");
-				}
-				// reset its blink counter
-				motorCounters[motor] = 0;
-		}
-}		
+        // mask off lower five bytes for the motor
+        motor = incomingByte & MOTOR_FLAG;
+
+        if (incomingByte & PROTO_ON) {
+            motorStates[motor] = ON;
+        } else if (incomingByte & PROTO_HALF) {
+            motorStates[motor] = HALF;
+        } else if (incomingByte & PROTO_OFF) {
+            motorStates[motor] = OFF;
+        } else {
+            // one of those flags must be set
+            Serial.print("received invalid byte");
+        }
+        // reset its blink counter
+        motorCounters[motor] = 0;
+    }
+}
 
 void blinkMotors() {
-		for (int i=0; i < N_MOTORS; i++) {
-				motorCounters[i]++;
-				if (motorStates[i] == ON) {
-						// on is on
-						motorOn(i);
-				} else if (motorStates[i] == HALF) {
-						// blink logic
-						if (motorCounters[i] < BLINK_INTERVAL) {
-								motorOn(i);
-						} else if (motorCounters[i] >= BLINK_INTERVAL && motorCounters[i] < (2 * BLINK_INTERVAL)) {
-								motorOff(i);
-						}
-				} else {
-						// otherwise it's off
-						motorOff(i);
-				}
-		}
+    for (int i=0; i < N_MOTORS; i++) {
+        motorCounters[i]++;
+        if (motorStates[i] == ON) {
+            // on is on
+            motorOn(i);
+        } else if (motorStates[i] == HALF) {
+            // blink logic
+            if (motorCounters[i] < BLINK_INTERVAL) {
+                motorOn(i);
+            } else if (motorCounters[i] >= BLINK_INTERVAL && motorCounters[i] < (2 * BLINK_INTERVAL)) {
+                motorOff(i);
+            }
+        } else {
+            // otherwise it's off
+            motorOff(i);
+        }
+    }
 }
 
 void loop() {
-		//		checkSerial();
+    //    checkSerial();
 
-		//		blinkMotors();
-		// purely for debugging:
+    //    blinkMotors();
+    // purely for debugging:
     for (int numberToDisplay = 0; numberToDisplay < 8; numberToDisplay++) {
-				motorOn(numberToDisplay);
+        motorOn(numberToDisplay);
         delay(500);
-				motorOff(numberToDisplay);
+        motorOff(numberToDisplay);
     }
 }
