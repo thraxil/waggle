@@ -11,9 +11,9 @@
 #define PROTO_OFF 0x20
 #define MOTOR_FLAG 0x1f
 
-int latchPin = 1;
-int clockPin = 2;
-int dataPin = 3;
+int latchPin = 2;
+int clockPin = 3;
+int dataPin = 4;
 
 int motorStates[N_MOTORS];
 int motorCounters[N_MOTORS];
