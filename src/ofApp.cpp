@@ -20,8 +20,10 @@ void ofApp::setup(){
     goalTargeted = -1; // the "correct" one
 
     // serial setup
+#ifdef ENABLE_POLLEN
     serial_reader = new SerialReader();
     serial_reader->setup();
+#endif
 
 //    music.loadSound("honey_for_the_drones.mp3");
 //    music.play();
@@ -33,10 +35,12 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+#ifdef ENABLE_POLLEN
     int serialGoal = serial_reader->update();
     if (serialGoal > -1) {
         goalSelected = serialGoal;
     }
+#endif
     goalTargeted = goals.getTargetGoal();
     sequencer.update();
     selectGoal();
