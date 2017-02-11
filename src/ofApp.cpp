@@ -33,7 +33,10 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    goalSelected = serial_reader->update();
+    int serialGoal = serial_reader->update();
+    if (serialGoal > -1) {
+        goalSelected = serialGoal;
+    }
     goalTargeted = goals.getTargetGoal();
     sequencer.update();
     selectGoal();
@@ -152,6 +155,7 @@ void ofApp::lose() {
 
 void ofApp::newGame() {
     ofLogNotice() << "starting new game";
+    goalSelected = -1;
     // pick a random goal
     auto g = std::rand() % NGoals;
     goals.selectTarget(g);
