@@ -55,6 +55,7 @@ Sequence buildLimitedSequence(unsigned full[4], unsigned half1[], unsigned half1
 void Sequencer::setup(MotorManager * m) {
     motors = m;
     isRunning = false;
+    isPaused = false;
 
     // define the patterns. remember, motors:
     //             -  0  1  2  3  -
@@ -266,12 +267,12 @@ void Sequencer::setup(MotorManager * m) {
 }
 
 void Sequencer::update() {
-    if (!isRunning) {
+    if (!isRunning || isPaused) {
         return;
     }
     auto currentTime = ofGetElapsedTimeMillis();
     if (currentTime > nextStepTime) {
-        nextStepTime += StepTime;
+        nextStepTime = currentTime + StepTime;
         auto idx = step % currentSequence.steps.size();
         auto s = currentSequence.steps.at(idx);
         motors->allOff();
@@ -295,4 +296,8 @@ void Sequencer::start(int goal) {
 void Sequencer::stop() {
     isRunning = false;
     motors->allOff();
+}
+
+void Sequencer::togglePause() {
+    isPaused = !isPaused;
 }

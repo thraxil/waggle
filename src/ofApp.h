@@ -42,4 +42,6 @@ class ofApp : public ofBaseApp{
 
     int goalSelected;
     int goalTargeted;
+
+		bool isPaused;
 };

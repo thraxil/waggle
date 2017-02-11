@@ -27,6 +27,8 @@ void ofApp::setup(){
     music.play();
     winSound.loadSound("win.wav");
     loseSound.loadSound("lose.wav");
+
+    isPaused = false;
 }
 
 //--------------------------------------------------------------
@@ -91,6 +93,10 @@ void ofApp::drawGrid(int rows, int cols, ofVec2f center, ofVec2f topLeft, float 
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    if (key == ' ') {
+        isPaused = !isPaused;
+        sequencer.togglePause();
+    }
     // this won't work once we have more than 10 goals,
     // but for now...
     if (key >= '0' && key <= '7') {

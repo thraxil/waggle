@@ -11,29 +11,31 @@ struct Step {
 };
 
 struct Sequence {
-		vector <Step> steps;
+    vector <Step> steps;
 };
 
 struct Pattern {
-		vector <Sequence> sequences;
+    vector <Sequence> sequences;
 };
 
 class Sequencer {
  public:
     void setup(MotorManager *);
-		void update();
-		void start(int);
-		void stop();
-		
+    void update();
+    void start(int);
+    void stop();
+    void togglePause();
+
     Sequencer();
  private:
-		bool isRunning;
-		MotorManager * motors;
-		float startTime;
-		float nextStepTime;
-		int goal;
-		int step;
-		Sequence currentSequence;
-		std::map <int, Pattern> patterns;
+    bool isRunning;
+    bool isPaused;
+    MotorManager * motors;
+    float startTime;
+    float nextStepTime;
+    int goal;
+    int step;
+    Sequence currentSequence;
+    std::map <int, Pattern> patterns;
 };
 #endif
