@@ -98,6 +98,11 @@ void MotorManager::allOff() {
     for (auto & motor : motors) {
         motor.setState(MotorState::OFF);
     }
+#ifdef ENABLE_MOTORS
+    for (int i=0; i < motors.size(); i++) {
+        sWriter->setMotor(i, MotorState::OFF);
+    }
+#endif
 }
 
 void MotorManager::setMotorState(int idx, MotorState ms) {

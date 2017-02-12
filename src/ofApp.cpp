@@ -102,6 +102,9 @@ void ofApp::drawGrid(int rows, int cols, ofVec2f center, ofVec2f topLeft, float 
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    if (key == 'x') {
+        sequencer.stop();
+    }
     if (key == ' ') {
         isPaused = !isPaused;
         sequencer.togglePause();
