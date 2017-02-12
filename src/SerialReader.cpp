@@ -7,7 +7,7 @@ SerialReader::SerialReader() {
 void SerialReader::setup() {
     serial = new ofSerial();
     serial->listDevices();
-    if(!serial->setup("/dev/ttyACM0", 9600)) {
+    if(!serial->setup(READ_SERIAL_PORT, 9600)) {
         ofLogNotice() << "unable to init serial device";
     }
 }
