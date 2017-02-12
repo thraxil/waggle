@@ -68,15 +68,6 @@ void blinkLEDs() {
 
 
 void loop() {
-		// anything on serial?
-		int incomingByte;
-		if (Serial1.available() > 0) {
-				// nothing to do with it yet, but here we are...
-				incomingByte = Serial1.read();
-				Serial1.print("USB received: ");
-				Serial1.println(incomingByte, DEC);
-		}
-		
     // read sensor data and react
     for(int i=0; i < N_SENSORS; i++){
         int sensorVal =readSensor(ldrs[i]);
