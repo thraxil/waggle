@@ -33,7 +33,7 @@ int ledCounter[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 int bump = 0;
 
 void setup() {
-    Serial.begin(9600);
+    Serial1.begin(9600);
     for (int i=0; i < N_SENSORS; i++) {
         pinMode(leds[i], OUTPUT);
     }
@@ -70,11 +70,11 @@ void blinkLEDs() {
 void loop() {
 		// anything on serial?
 		int incomingByte;
-		if (Serial.available() > 0) {
+		if (Serial1.available() > 0) {
 				// nothing to do with it yet, but here we are...
-				incomingByte = Serial.read();
-				Serial.print("USB received: ");
-				Serial.println(incomingByte, DEC);
+				incomingByte = Serial1.read();
+				Serial1.print("USB received: ");
+				Serial1.println(incomingByte, DEC);
 		}
 		
     // read sensor data and react
@@ -91,22 +91,22 @@ void loop() {
             thresholds[i] = (maxes[i] + mins[i]) / 2;
         }
 
-				//        Serial.print(i);
-				//        Serial.print(":");
-				//        Serial.print(sensorVal);
-				//        Serial.println("");
+				//        Serial1.print(i);
+				//        Serial1.print(":");
+				//        Serial1.print(sensorVal);
+				//        Serial1.println("");
 
         if(sensorVal <= thresholds[i]){
 						if (ledStates[i] == 0) {
 								ledStates[i] = 1;
-								Serial.print(i);
-								Serial.println(":ON");
+								Serial1.print(i);
+								Serial1.println(":ON");
 						}
         } else {
 						if (ledStates[i] == 1) {
 								ledStates[i] = 0;
-								Serial.print(i);
-								Serial.println(":OFF");
+								Serial1.print(i);
+								Serial1.println(":OFF");
 						}
         }
     }
