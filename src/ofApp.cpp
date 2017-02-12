@@ -27,8 +27,8 @@ void ofApp::setup(){
 
 //    music.loadSound("honey_for_the_drones.mp3");
 //    music.play();
-//    winSound.loadSound("win.wav");
-//    loseSound.loadSound("lose.wav");
+    winSound.loadSound("win.wav");
+    loseSound.loadSound("lose.wav");
 
     isPaused = false;
 }
@@ -145,16 +145,14 @@ void ofApp::selectGoal() {
 void ofApp::win() {
     ofLogNotice() << "correct goal selected! you've got pollen!";
     // show animation
-    // play sound
-//    winSound.play();
+    winSound.play();
     newGame();
 }
 
 void ofApp::lose() {
     ofLogNotice() << "wrong goal! no pollen for you!";
     // show animation
-    // pay sound
-//    loseSound.play();
+    loseSound.play();
     newGame();
 }
 
