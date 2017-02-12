@@ -1,5 +1,9 @@
+#include <Adafruit_NeoPixel.h>
+
 #define N_MOTORS 28
-#define BLINK_INTERVAL 60S
+#define BLINK_INTERVAL 60
+#define LEDSTRIP 12
+#define NUMPIXELS 30
 
 // motor states
 #define OFF 0
@@ -22,6 +26,10 @@ int dataPin = 4;
 int motorStates[N_MOTORS];
 int motorCounters[N_MOTORS];
 
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, LEDSTRIP, NEO_GRB + NEO_KHZ800);
+int delayVal = 20;
+int numLoops = 5;
+
 void setup() {
     Serial.begin(9600);
     pinMode(latchPin, OUTPUT);
@@ -36,6 +44,17 @@ void setup() {
         motorStates[i] = 0;
         motorCounters[i] = 0;
     }
+		pixels.begin();
+}
+
+void winAnimation() {
+		for (int i=0; i < numLoops; i++) {
+				for (int j=0; j < NUMPIXELS; j++) {
+						pixels.setPixelColor(j, pixels.Color(255, 255, 255));
+						pixels.show();
+						delay(delayVal);
+				}
+		}
 }
 
 // the bits you want to send
@@ -126,6 +145,12 @@ void checkSerial() {
 
         Serial.print("USB received: ");
         Serial.println(incomingByte, DEC);
+
+				// first, check for a win
+				if (incomingByte == 0xFF) {
+						winAnimation();
+						return;
+				}
 
         // mask off lower five bits for the motor
         motor = incomingByte & MOTOR_FLAG;
