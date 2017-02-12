@@ -10,7 +10,7 @@ int ldrP5 = A5;
 int ldrP6 = A8;
 int ldrP7 = A9;
 
-int ledP0 = 12;
+int ledP0 = 2;
 int ledP1 = 3;
 int ledP2 = 4;
 int ledP3 = 5;

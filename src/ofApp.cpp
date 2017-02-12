@@ -43,6 +43,7 @@ void ofApp::update(){
 #endif
     goalTargeted = goals.getTargetGoal();
     sequencer.update();
+    motors.update();
     selectGoal();
 }
 

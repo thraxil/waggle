@@ -1,7 +1,5 @@
 #define N_MOTORS 28
-#define BLINK_INTERVAL 100
-#define ON_DELAY 4
-#define OFF_DELAY 1
+#define BLINK_INTERVAL 60S
 
 // motor states
 #define OFF 0
@@ -12,6 +10,10 @@
 #define PROTO_HALF 0x40
 #define PROTO_OFF 0x20
 #define MOTOR_FLAG 0x1f
+
+#define MOTOR_25 6
+#define MOTOR_26 7
+#define MOTOR_27 8
 
 int latchPin = 2;
 int clockPin = 3;
@@ -26,35 +28,83 @@ void setup() {
     pinMode(clockPin, OUTPUT);
     pinMode(dataPin, OUTPUT);
 
+    pinMode(MOTOR_25, OUTPUT);
+    pinMode(MOTOR_26, OUTPUT);
+    pinMode(MOTOR_27, OUTPUT);
+
     for (int i=0; i < N_MOTORS; i++) {
         motorStates[i] = 0;
         motorCounters[i] = 0;
     }
 }
 
+// the bits you want to send
+byte bitsToSend[3] = {0, 0, 0};
+
 
 void registerWrite(int whichPin, int whichState) {
-    // the bits you want to send
-    byte bitsToSend = 0;
+    // three are not on shift registers, just on individual
+    // digital out pins
+    if (whichPin == 25) {
+        digitalWrite(MOTOR_25, whichState);
+        return;
+    }
+    if (whichPin == 26) {
+        digitalWrite(MOTOR_26, whichState);
+        return;
+    }
+    if (whichPin == 27) {
+        digitalWrite(MOTOR_27, whichState);
+        return;
+    }
+    // shift registers for the rest...
+
+		/* //    Serial.print(whichPin); */
+    /* if (whichState) { */
+    /*     Serial.print(" ON "); */
+    /* } else { */
+    /*     Serial.println(" OFF "); */
+    /* } */
 
     // turn off the output so the pins don't light up during the shift
     digitalWrite(latchPin, LOW);
 
     // turn on the next highest bit in bitsToSend:
-    bitWrite(bitsToSend, whichPin, whichState);
+    if (whichPin < 8) {
+        bitWrite(bitsToSend[0], whichPin, whichState);
+    } else if (whichPin < 15) {
+        bitWrite(bitsToSend[1], whichPin - 8, whichState);
+    } else {
+        bitWrite(bitsToSend[2], whichPin - 16, whichState);
+    }
 
     // shift the bits out:
-    shiftOut(dataPin, clockPin, MSBFIRST, bitsToSend);
+    shiftOut(dataPin, clockPin, MSBFIRST, bitsToSend[0]);
+    if (bitsToSend[0] != 0) {
+				//        Serial.println(" byte 0");
+    }
+    shiftOut(dataPin, clockPin, MSBFIRST, bitsToSend[1]);
+    if (bitsToSend[1] != 0) {
+				//        Serial.println(" byte 1");
+    }
+    shiftOut(dataPin, clockPin, MSBFIRST, bitsToSend[2]);
+    if (bitsToSend[2] != 0) {
+				//        Serial.println(" byte 2");
+    }
 
     // ship it
     digitalWrite(latchPin, HIGH);
 }
 
 void motorOn(int motor) {
+    //    Serial.print("switch on motor ");
+    //    Serial.println(motor);
     registerWrite(motor, HIGH);
 }
 
 void motorOff(int motor) {
+    //    Serial.print("switch off motor ");
+    //    Serial.println(motor);
     registerWrite(motor, LOW);
 }
 
@@ -80,16 +130,16 @@ void checkSerial() {
         // mask off lower five bits for the motor
         motor = incomingByte & MOTOR_FLAG;
 
-				Serial.print("MOTOR: ");
-				Serial.println(motor);
+        Serial.print("MOTOR: ");
+        Serial.println(motor);
         if (incomingByte & PROTO_ON) {
-						Serial.println("ON");
+            Serial.println("ON");
             motorStates[motor] = ON;
         } else if (incomingByte & PROTO_HALF) {
-						Serial.println("HALF");
+            Serial.println("HALF");
             motorStates[motor] = HALF;
         } else if (incomingByte & PROTO_OFF) {
-						Serial.println("OFF");
+            Serial.println("OFF");
             motorStates[motor] = OFF;
         } else {
             // one of those flags must be set
@@ -101,40 +151,43 @@ void checkSerial() {
 }
 
 void blinkMotors() {
+    //    for (int k=0; k < 3; k++) {
+    //        bitsToSend[k] = 0;
+    //    }
+
     for (int i=0; i < N_MOTORS; i++) {
         motorCounters[i]++;
-				if (motorCounters[i] > (2 * BLINK_INTERVAL)) {
-						motorCounters[i] = 0;
-				}
+        if (motorCounters[i] > (2 * BLINK_INTERVAL)) {
+            motorCounters[i] = 0;
+        }
         if (motorStates[i] == ON) {
             // on is on
             motorOn(i);
-						delay(ON_DELAY);
         } else if (motorStates[i] == HALF) {
             // blink logic
-            if (motorCounters[i] < BLINK_INTERVAL) {
-                motorOn(i);
-								delay(ON_DELAY);
-            } else if (motorCounters[i] >= BLINK_INTERVAL && motorCounters[i] < (2 * BLINK_INTERVAL)) {
-                motorOff(i);
-								delay(OFF_DELAY);
-            }
-        } else {
-            // otherwise it's off
-            motorOff(i);
-        }
-    }
+            if ((millis() % BLINK_INTERVAL) < (BLINK_INTERVAL / 2)) {
+								motorOn(i);
+						} else {
+								motorOff(i);
+						}
+				} else {
+						// otherwise it's off
+						motorOff(i);
+				}
+		}
 }
 
 void loop() {
 		checkSerial();
 
 		blinkMotors();
-    // purely for debugging:
-    /* for (int numberToDisplay = 0; numberToDisplay < 1; numberToDisplay++) { */
-    /*     motorOn(numberToDisplay); */
-    /*     delay(250); */
-    /*     motorOff(numberToDisplay); */
-		/* 		delay(250); */
-    /* } */
+		//		delay(1);
+		//    delay(10);
+		// purely for debugging:
+		/* for (int numberToDisplay = 0; numberToDisplay < 28; numberToDisplay++) { */
+		/*     motorOn(numberToDisplay); */
+		/*     delay(250); */
+		/*     motorOff(numberToDisplay); */
+		/*    delay(250); */
+		/* } */
 }

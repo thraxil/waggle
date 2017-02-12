@@ -38,6 +38,7 @@ class Sequencer {
     int goal;
     int step;
 		int StepTime;
+		int lastMotor;
     Sequence currentSequence;
     std::map <int, Pattern> patterns;
 };

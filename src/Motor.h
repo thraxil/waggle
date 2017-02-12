@@ -9,7 +9,7 @@ class Motor {
 		void setup(int _idx);
 		Motor();
 		MotorState getState();
-		void interact();
+		MotorState interact();
 		void setState(MotorState);
 
  private:

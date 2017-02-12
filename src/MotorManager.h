@@ -3,6 +3,9 @@
 
 #include "ofMain.h"
 #include "Motor.h"
+#include "SerialWriter.h"
+
+#define ENABLE_MOTORS 1
 
 struct MotorTarget {
 		int x, y;
@@ -23,5 +26,6 @@ public:
 		vector <Motor> motors;
 		vector <MotorTarget> targets;
     std::map<MotorState,ofColor> colorMap;
+		SerialWriter * sWriter;
 };
 #endif

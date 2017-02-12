@@ -263,6 +263,8 @@ void Sequencer::setup(MotorManager * m) {
     p7.sequences.push_back(NW1_sequence);
     p7.sequences.push_back(NW2_sequence);
     patterns[7] = p7;
+
+    lastMotor = 0;
 }
 
 void Sequencer::update() {
@@ -274,8 +276,9 @@ void Sequencer::update() {
         nextStepTime = currentTime + StepTime;
         auto idx = step % currentSequence.steps.size();
         auto s = currentSequence.steps.at(idx);
-        motors->allOff();
+        motors->setMotorState(lastMotor, MotorState::OFF);
         motors->setMotorState(s.motor, s.state);
+        lastMotor = s.motor;
         step++;
     }
 }

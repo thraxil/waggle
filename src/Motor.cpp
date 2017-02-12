@@ -17,8 +17,8 @@ MotorState Motor::getState() {
     return state;
 }
 
-void Motor::interact() {
-    setState(stateTransitions[state]);
+MotorState Motor::interact() {
+    return stateTransitions[state];
 }
 
 std::string stateString(MotorState ms) {
@@ -34,7 +34,6 @@ std::string stateString(MotorState ms) {
 
 void Motor::setState(MotorState ms) {
     if (state != ms) {
-//        ofLogNotice() << "motor[" << idx << "] " << stateString(state) << " to " << stateString(ms);
         state = ms;
     }
 }

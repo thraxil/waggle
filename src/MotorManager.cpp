@@ -34,9 +34,17 @@ void MotorManager::setup() {
     colorMap[MotorState::HALF] = ofColor::orange;
     colorMap[MotorState::FULL] = ofColor::red;
     colorMap[MotorState::OFF] = ofColor::white;
+#ifdef ENABLE_MOTORS
+    ofLogNotice() << "enabling serialwriter";
+    sWriter = new SerialWriter();
+    sWriter->setup();
+#endif
 }
 
 void MotorManager::update() {
+#ifdef ENABLE_MOTORS
+    sWriter->update();
+#endif
 }
 
 void MotorManager::draw(ofVec2f topLeft, int mWidth) {
@@ -72,7 +80,8 @@ void MotorManager::mouseReleased(int x, int y, int button){
         auto t = targets.at(i);
         if ((x >= t.x && x < (t.x + t.width)) &&
             (y >= t.y && y < (t.y + t.width))) {
-            motors.at(i).interact();
+            MotorState s = motors.at(i).interact();
+            setMotorState(i, s);
         }
     }
 }
@@ -85,4 +94,7 @@ void MotorManager::allOff() {
 
 void MotorManager::setMotorState(int idx, MotorState ms) {
     motors.at(idx).setState(ms);
+#ifdef ENABLE_MOTORS
+    sWriter->setMotor(idx, ms);
+#endif
 }

@@ -7,7 +7,6 @@
 #include "SerialReader.h"
 
 #undef ENABLE_POLLEN
-
 class ofApp : public ofBaseApp{
 
  public:
