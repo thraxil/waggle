@@ -1,4 +1,4 @@
-#define N_SENSORS 1
+#define N_SENSORS 8
 #define BLINK_INTERVAL 400
 
 int ldrP0 = A0;
