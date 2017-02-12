@@ -20,6 +20,7 @@ public:
 		void mouseReleased(int x, int y, int button);
 		void allOff();
 		void setMotorState(int, MotorState);
+		void winAnimation();
 
 		MotorManager();
  private:

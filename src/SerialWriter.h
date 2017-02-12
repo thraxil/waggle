@@ -15,6 +15,7 @@ class SerialWriter {
 		void setup();
 		void update();
 		void setMotor(int, MotorState);
+		void winAnimation();
 
  private:
 		ofSerial * serial;

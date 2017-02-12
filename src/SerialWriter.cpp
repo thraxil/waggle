@@ -33,3 +33,8 @@ void SerialWriter::setMotor(int m, MotorState ms) {
         ofLogNotice() << "no serial available";
     }
 }
+
+void SerialWriter::winAnimation() {
+    ofLogNotice() << "sending win animation signal";
+    serial->writeByte(0xFF);
+}

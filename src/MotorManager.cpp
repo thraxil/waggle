@@ -47,6 +47,14 @@ void MotorManager::update() {
 #endif
 }
 
+void MotorManager::winAnimation() {
+    // in here because the motor controller arduino
+    // happens to be the one with the neopixels attached
+#ifdef ENABLE_MOTORS
+    sWriter->winAnimation();
+#endif
+}
+
 void MotorManager::draw(ofVec2f topLeft, int mWidth) {
     for (unsigned int i=0; i < motors.size(); i++) {
         int row = rows[i];
