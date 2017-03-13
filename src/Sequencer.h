@@ -14,7 +14,7 @@ struct Sequence {
     vector <Step> steps;
 };
 
-struct Pattern {
+struct WagglePattern {
     vector <Sequence> sequences;
 };
 
@@ -40,6 +40,6 @@ class Sequencer {
 		int StepTime;
 		int lastMotor;
     Sequence currentSequence;
-    std::map <int, Pattern> patterns;
+    std::map <int, WagglePattern> patterns;
 };
 #endif

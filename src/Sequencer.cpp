@@ -90,7 +90,7 @@ void Sequencer::setup(MotorManager * m) {
                             7, 12, 18, 23}; // HALF <-
     auto N4_sequence = buildStandardSequence(N4steps);
 
-    Pattern p0;
+    WagglePattern p0;
     p0.sequences.push_back(N1_sequence);
     p0.sequences.push_back(N2_sequence);
     p0.sequences.push_back(N3_sequence);
@@ -111,7 +111,7 @@ void Sequencer::setup(MotorManager * m) {
                              13, 18, 22, 25}; // HALF <-
     auto NE2_sequence = buildStandardSequence(NE2steps);
 
-    Pattern p1;
+    WagglePattern p1;
     p1.sequences.push_back(NE1_sequence);
     p1.sequences.push_back(NE2_sequence);
 
@@ -141,7 +141,7 @@ void Sequencer::setup(MotorManager * m) {
     unsigned E4half2[3] = {23, 22, 21};
     auto E4_sequence = buildLimitedSequence(E4full, E4half1, 4, E4half2, 3);
 
-    Pattern p2;
+    WagglePattern p2;
     p2.sequences.push_back(E1_sequence);
     p2.sequences.push_back(E2_sequence);
     p2.sequences.push_back(E3_sequence);
@@ -161,7 +161,7 @@ void Sequencer::setup(MotorManager * m) {
                              27, 22, 16, 9}; // HALF <-
     auto SE2_sequence = buildStandardSequence(SE2steps);
 
-    Pattern p3;
+    WagglePattern p3;
     p3.sequences.push_back(SE1_sequence);
     p3.sequences.push_back(SE2_sequence);
 
@@ -192,7 +192,7 @@ void Sequencer::setup(MotorManager * m) {
                             23, 18, 12, 7}; // HALF <-
     auto S4_sequence = buildStandardSequence(S4steps);
 
-    Pattern p4;
+    WagglePattern p4;
     p4.sequences.push_back(S1_sequence);
     p4.sequences.push_back(S2_sequence);
     p4.sequences.push_back(S3_sequence);
@@ -211,7 +211,7 @@ void Sequencer::setup(MotorManager * m) {
                              24, 21, 17, 12}; // HALF <-
     auto SW2_sequence = buildStandardSequence(SW2steps);
 
-    Pattern p5;
+    WagglePattern p5;
     p5.sequences.push_back(SW1_sequence);
     p5.sequences.push_back(SW2_sequence);
     patterns[5] = p5;
@@ -239,7 +239,7 @@ void Sequencer::setup(MotorManager * m) {
     unsigned W4half2[3] = {20, 21, 22};
     auto W4_sequence = buildLimitedSequence(W4full, W4half1, 4, W4half2, 3);
 
-    Pattern p6;
+    WagglePattern p6;
     p6.sequences.push_back(W1_sequence);
     p6.sequences.push_back(W2_sequence);
     p6.sequences.push_back(W3_sequence);
@@ -259,7 +259,7 @@ void Sequencer::setup(MotorManager * m) {
                              9, 16, 22, 27}; // HALF <-
     auto NW2_sequence = buildStandardSequence(NW2steps);
 
-    Pattern p7;
+    WagglePattern p7;
     p7.sequences.push_back(NW1_sequence);
     p7.sequences.push_back(NW2_sequence);
     patterns[7] = p7;
