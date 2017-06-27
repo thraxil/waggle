@@ -16,7 +16,7 @@ class MotorManager {
 public:
     void setup();
     void update();
-    void draw(ofVec2f topLeft, int mWidth);
+    void draw(ofVec2f topLeft, int mWidth, ofVec2f center);
 		void mouseReleased(int x, int y, int button);
 		void allOff();
 		void setMotorState(int, MotorState);

@@ -4,15 +4,15 @@
 #include "ofMain.h"
 #include "Motor.h"
 
-#define PROTO_ON 0x80
-#define PROTO_HALF 0x40
-#define PROTO_OFF 0x20
-#define MOTOR_MASK 0x1f
+#define PROTO_ON 0x80 //1000 0000
+#define PROTO_HALF 0x40 // 0100 0000
+#define PROTO_OFF 0x20 //0010 0000
+#define MOTOR_MASK 0x1f //0001 1111 
 
 #ifdef TARGET_WIN32
 #define WRITE_SERIAL_PORT "WINDOWS SERIAL PORT GOES HERE"
 #else
-#define WRITE_SERIAL_PORT "/dev/ttyACM0"
+#define WRITE_SERIAL_PORT "cu.usbmodem1421"
 #endif
 
 class SerialWriter {

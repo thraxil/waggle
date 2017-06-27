@@ -1,9 +1,17 @@
-#include <Adafruit_NeoPixel.h>
+                                               #include <Adafruit_NeoPixel.h>
 
 #define N_MOTORS 28
 #define BLINK_INTERVAL 60
 #define LEDSTRIP 12
 #define NUMPIXELS 30
+
+#define MOTOR_1 3
+#define MOTOR_2 4
+#define MOTOR_3 5 
+#define MOTOR_4 6
+#define MOTOR_5 7
+#define MOTOR_6 8
+#define MOTOR_7 9
 
 // motor states
 #define OFF 0
@@ -39,7 +47,13 @@ void setup() {
     pinMode(MOTOR_25, OUTPUT);
     pinMode(MOTOR_26, OUTPUT);
     pinMode(MOTOR_27, OUTPUT);
-
+    pinMode(MOTOR_1, OUTPUT);
+    pinMode(MOTOR_2, OUTPUT);
+    pinMode(MOTOR_3, OUTPUT);
+    pinMode(MOTOR_4, OUTPUT);
+    pinMode(MOTOR_5, OUTPUT);
+    pinMode(MOTOR_6, OUTPUT);
+    pinMode(MOTOR_7, OUTPUT);
     for (int i=0; i < N_MOTORS; i++) {
         motorStates[i] = 0;
         motorCounters[i] = 0;
@@ -62,57 +76,36 @@ byte bitsToSend[3] = {0, 0, 0};
 
 
 void registerWrite(int whichPin, int whichState) {
-    // three are not on shift registers, just on individual
-    // digital out pins
-    if (whichPin == 25) {
-        digitalWrite(MOTOR_25, whichState);
+    
+    if (whichPin == 0 || whichPin == 1 || whichPin == 5 ||whichPin == 4) {
+        digitalWrite(MOTOR_1, whichState);
         return;
     }
-    if (whichPin == 26) {
-        digitalWrite(MOTOR_26, whichState);
+    if (whichPin == 2 || whichPin == 3 || whichPin == 7 || whichPin ==  6) {
+        digitalWrite(MOTOR_2, whichState);
         return;
     }
-    if (whichPin == 27) {
-        digitalWrite(MOTOR_27, whichState);
+    if (whichPin == 9 || whichPin == 8 || whichPin == 15 || whichPin == 14) {
+        digitalWrite(MOTOR_3, whichState);
         return;
     }
-    // shift registers for the rest...
-
-		/* //    Serial.print(whichPin); */
-    /* if (whichState) { */
-    /*     Serial.print(" ON "); */
-    /* } else { */
-    /*     Serial.println(" OFF "); */
-    /* } */
-
-    // turn off the output so the pins don't light up during the shift
-    digitalWrite(latchPin, LOW);
-
-    // turn on the next highest bit in bitsToSend:
-    if (whichPin < 8) {
-        bitWrite(bitsToSend[0], whichPin, whichState);
-    } else if (whichPin < 15) {
-        bitWrite(bitsToSend[1], whichPin - 8, whichState);
-    } else {
-        bitWrite(bitsToSend[2], whichPin - 16, whichState);
+      if (whichPin == 11 || whichPin == 10 || whichPin == 17 || whichPin == 16) {
+        digitalWrite(MOTOR_4, whichState);
+        return;
+    }
+    if (whichPin == 13 || whichPin == 12 || whichPin == 19 || whichPin == 18) {
+        digitalWrite(MOTOR_5, whichState);
+        return;
+    }
+    if (whichPin == 21 || whichPin == 20 || whichPin == 24 || whichPin == 25) {
+        digitalWrite(MOTOR_6, whichState);
+        return;
+    }
+    if (whichPin == 23 ||whichPin == 22|| whichPin == 27 || whichPin == 26 ) {
+        digitalWrite(MOTOR_7, whichState);
+        return;
     }
 
-    // shift the bits out:
-    shiftOut(dataPin, clockPin, MSBFIRST, bitsToSend[0]);
-    if (bitsToSend[0] != 0) {
-				//        Serial.println(" byte 0");
-    }
-    shiftOut(dataPin, clockPin, MSBFIRST, bitsToSend[1]);
-    if (bitsToSend[1] != 0) {
-				//        Serial.println(" byte 1");
-    }
-    shiftOut(dataPin, clockPin, MSBFIRST, bitsToSend[2]);
-    if (bitsToSend[2] != 0) {
-				//        Serial.println(" byte 2");
-    }
-
-    // ship it
-    digitalWrite(latchPin, HIGH);
 }
 
 void motorOn(int motor) {
@@ -157,7 +150,7 @@ void checkSerial() {
 
         Serial.print("MOTOR: ");
         Serial.println(motor);
-        if (incomingByte & PROTO_ON) {
+        if (incomingByte & PROTO_ON) { //we are looking for 0x80
             Serial.println("ON");
             motorStates[motor] = ON;
         } else if (incomingByte & PROTO_HALF) {
@@ -204,7 +197,8 @@ void blinkMotors() {
 
 void loop() {
 		checkSerial();
-
+    digitalWrite(1, HIGH); 
+    //digitalWrite(1,HIGH); 
 		blinkMotors();
 		//		delay(1);
 		//    delay(10);
@@ -215,4 +209,8 @@ void loop() {
 		/*     motorOff(numberToDisplay); */
 		/*    delay(250); */
 		/* } */
+}
+bool inRange(int val, int minimum, int maximum)
+{
+  return ((minimum <= val) && (val <= maximum));
 }

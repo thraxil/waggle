@@ -30,7 +30,7 @@ void GoalManager::draw(ofVec2f center, float radius) {
     auto size = GoalScale * radius;
 
     for (unsigned int i=0; i<goals.size(); i++) {
-        auto angle = ofDegToRad((i * step) - 90);
+        auto angle = ofDegToRad((i * step)); // spin this line until the goals are placed correctly
         auto x = center.x + (cos(angle) * radius);
         auto y = center.y + (sin(angle) * radius);
         auto goal = goals.at(i);
@@ -71,6 +71,7 @@ void GoalManager::mouseReleased(int x, int y, int button){
             if (!isTarget) {
                 targetGoal = i;
                 goals.at(i).selectTarget();
+                cout<< i << " Is selected" << endl; 
                 sequencer->start(i);
             } else {
                 targetGoal = -1;
