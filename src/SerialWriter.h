@@ -12,7 +12,7 @@
 #ifdef TARGET_WIN32
 #define WRITE_SERIAL_PORT "WINDOWS SERIAL PORT GOES HERE"
 #else
-#define WRITE_SERIAL_PORT "cu.usbmodem1421"
+#define WRITE_SERIAL_PORT "tty.usbmodem2384331"
 #endif
 
 class SerialWriter {
@@ -22,7 +22,8 @@ class SerialWriter {
 		void update();
 		void setMotor(int, MotorState);
 		void winAnimation();
-
+        void closePort();
+    
  private:
 		ofSerial * serial;
 };

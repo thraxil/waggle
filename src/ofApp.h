@@ -6,7 +6,8 @@
 #include "Sequencer.h"
 #include "SerialReader.h"
 
-#undef ENABLE_POLLEN
+#define ENABLE_POLLEN  //undef == turn it off
+
 class ofApp : public ofBaseApp{
 
  public:

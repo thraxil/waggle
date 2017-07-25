@@ -1,17 +1,17 @@
-                                               #include <Adafruit_NeoPixel.h>
+#include <Adafruit_NeoPixel.h>
 
-#define N_MOTORS 28
+#define N_MOTORS 7
 #define BLINK_INTERVAL 60
 #define LEDSTRIP 12
 #define NUMPIXELS 30
 
-#define MOTOR_1 3
-#define MOTOR_2 4
+#define MOTOR_1 10
+#define MOTOR_2 6
 #define MOTOR_3 5 
-#define MOTOR_4 6
-#define MOTOR_5 7
-#define MOTOR_6 8
-#define MOTOR_7 9
+#define MOTOR_4 4
+#define MOTOR_5 3
+#define MOTOR_6 9
+#define MOTOR_7 21
 
 // motor states
 #define OFF 0
@@ -39,6 +39,7 @@ int delayVal = 20;
 int numLoops = 5;
 
 void setup() {
+
     Serial.begin(9600);
     pinMode(latchPin, OUTPUT);
     pinMode(clockPin, OUTPUT);

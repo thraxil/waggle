@@ -71,7 +71,7 @@ void GoalManager::mouseReleased(int x, int y, int button){
             if (!isTarget) {
                 targetGoal = i;
                 goals.at(i).selectTarget();
-                cout<< i << " Is selected" << endl; 
+               // cout<< i << " Is selected" << endl;
                 sequencer->start(i);
             } else {
                 targetGoal = -1;

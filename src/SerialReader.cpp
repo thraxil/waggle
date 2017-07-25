@@ -20,6 +20,7 @@ int SerialReader::update() {
         unsigned char bytesReturned[7];
         memset(bytesReturned, 0, sizeof(bytesReturned));
         serial->readBytes(bytesReturned, 6);
+        cout << bytesReturned <<endl; 
         // the messages from the pollen look like
         // 0:ON or 0:OFF or 3:ON etc.
         // ie, GOAL:STATE
@@ -27,7 +28,7 @@ int SerialReader::update() {
         // so the 0th char gives us an index
         // and we can just use the 3rd char, 'N' or 'F' to
         // figure out the state
-        goal = bytesReturned[0] - '0';
+        goal = bytesReturned[0] - '0'; //single character in c is a byte. converting a char to an int
         on = (bytesReturned[3] == 'N');
         ofLogNotice() << goal << ":" << on;
     }

@@ -59,6 +59,7 @@ void MotorManager::setup() {
 void MotorManager::update() {
 #ifdef ENABLE_MOTORS
     sWriter->update();
+
 #endif
 }
 

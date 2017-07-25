@@ -130,7 +130,7 @@ void Sequencer::update() {
 
 void Sequencer::start(int goal) {
     
-    cout << goal << " is the goal number from the sequencer " << endl;
+   // cout << goal << " is the goal number from the sequencer " << endl;
     // select a sequence for the goal
     currentSequence = patterns.at(goal);
 

@@ -1,5 +1,7 @@
-#define N_SENSORS 8
-#define BLINK_INTERVAL 400
+#define N_SENSORS 6
+#define BLINK_INTERVAL 500
+#define HWSERIAL Serial1
+#define SWSERIAL Serial 
 
 int ldrP0 = A0;
 int ldrP1 = A1;
@@ -19,21 +21,22 @@ int ledP5 = 7;
 int ledP6 = 8;
 int ledP7 = 9;
 
-int ldrs[8] = {ldrP0,ldrP1, ldrP2, ldrP3, ldrP4, ldrP5,ldrP6, ldrP7};
-int leds[8] = {ledP0, ledP1, ledP2, ledP3, ledP4, ledP5, ledP6, ledP7};
+int ldrs[6] = {ldrP0,ldrP1, ldrP2, ldrP3, ldrP4, ldrP5};
+int leds[6] = {ledP0, ledP1, ledP2, ledP3, ledP4, ledP5};
 
-int mins[8] = {1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024};
-int maxes[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-int thresholds[8] = {512, 512, 512, 512, 512, 512, 512, 512};
+int mins[6] = {1024, 1024, 1024, 1024, 1024, 1024};
+int maxes[6] = {0, 0, 0, 0, 0, 0};
+int thresholds[6] = {512, 512, 512, 512, 512, 512};
 
 // blinking or not
-int ledStates[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-int ledCounter[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+int ledStates[6] = {0, 0, 0, 0, 0, 0};
+int ledCounter[6] = {0, 0, 0, 0, 0, 0};
 
 int bump = 0;
 
 void setup() {
-    Serial1.begin(9600);
+    HWSERIAL.begin(9600);
+    SWSERIAL.begin(9600); 
     for (int i=0; i < N_SENSORS; i++) {
         pinMode(leds[i], OUTPUT);
     }
@@ -68,6 +71,7 @@ void blinkLEDs() {
 
 
 void loop() {
+//  digitalWrite(ledP3, HIGH);
     // read sensor data and react
     for(int i=0; i < N_SENSORS; i++){
         int sensorVal =readSensor(ldrs[i]);
@@ -82,22 +86,26 @@ void loop() {
             thresholds[i] = (maxes[i] + mins[i]) / 2;
         }
 
-				//        Serial1.print(i);
-				//        Serial1.print(":");
-				//        Serial1.print(sensorVal);
-				//        Serial1.println("");
+				//        HWSERIAL.print(i);
+				//        HWSERIAL.print(":");
+				//        HWSERIAL.print(sensorVal);
+				//        HWSERIAL.println("");
 
         if(sensorVal <= thresholds[i]){
 						if (ledStates[i] == 0) {
 								ledStates[i] = 1;
-								Serial1.print(i);
-								Serial1.println(":ON");
+								HWSERIAL.print(i);
+                                SWSERIAL.print(i); 
+								HWSERIAL.println(":ON");
+                                SWSERIAL.println("ON"); 
 						}
         } else {
 						if (ledStates[i] == 1) {
 								ledStates[i] = 0;
-								Serial1.print(i);
-								Serial1.println(":OFF");
+								HWSERIAL.print(i);
+                                SWSERIAL.print(i); 
+								HWSERIAL.println(":OFF");
+                                SWSERIAL.println(":OFF"); 
 						}
         }
     }
@@ -112,5 +120,5 @@ void loop() {
         }
     }
 
-    blinkLEDs();
+    //blinkLEDs();
 }
