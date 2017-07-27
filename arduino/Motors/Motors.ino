@@ -1,5 +1,9 @@
 #include <Adafruit_NeoPixel.h>
+//http://forum.arduino.cc/index.php?topic=142753.0
 
+
+#define SWSerial Serial
+#define HWSerial Serial1
 #define N_MOTORS 7
 #define BLINK_INTERVAL 60
 #define LEDSTRIP 12
@@ -7,7 +11,7 @@
 
 #define MOTOR_1 10
 #define MOTOR_2 6
-#define MOTOR_3 5 
+#define MOTOR_3 5
 #define MOTOR_4 4
 #define MOTOR_5 3
 #define MOTOR_6 9
@@ -38,9 +42,11 @@ Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, LEDSTRIP, NEO_GRB + NEO_
 int delayVal = 20;
 int numLoops = 5;
 
+
 void setup() {
 
-    Serial.begin(9600);
+    HWSerial.begin(9600);
+    SWSerial.begin(9600);
     pinMode(latchPin, OUTPUT);
     pinMode(clockPin, OUTPUT);
     pinMode(dataPin, OUTPUT);
@@ -77,7 +83,7 @@ byte bitsToSend[3] = {0, 0, 0};
 
 
 void registerWrite(int whichPin, int whichState) {
-    
+
     if (whichPin == 0 || whichPin == 1 || whichPin == 5 ||whichPin == 4) {
         digitalWrite(MOTOR_1, whichState);
         return;
@@ -131,14 +137,14 @@ the upper three bits are flags for ON/HALF/FULL. only one of them can be set.
 
 ************************/
 
-void checkSerial() {
+void checkSerial(HardwareSerial *this_port) {
     unsigned char incomingByte;
     int motor;
-    if (Serial.available() > 0) {
-        incomingByte = Serial.read();
+    if (this_port->available() > 0) {
+        incomingByte = this_port->read();
 
-        Serial.print("USB received: ");
-        Serial.println(incomingByte, DEC);
+        this_port->print("USB received: ");
+        this_port->println(incomingByte, DEC);
 
 				// first, check for a win
 				if (incomingByte == 0xFF) {
@@ -149,26 +155,63 @@ void checkSerial() {
         // mask off lower five bits for the motor
         motor = incomingByte & MOTOR_FLAG;
 
-        Serial.print("MOTOR: ");
-        Serial.println(motor);
+        this_port->print("MOTOR: ");
+        this_port->println(motor);
         if (incomingByte & PROTO_ON) { //we are looking for 0x80
-            Serial.println("ON");
+            this_port->println("ON");
             motorStates[motor] = ON;
         } else if (incomingByte & PROTO_HALF) {
-            Serial.println("HALF");
+            this_port->println("HALF");
             motorStates[motor] = HALF;
         } else if (incomingByte & PROTO_OFF) {
-            Serial.println("OFF");
+            this_port->println("OFF");
             motorStates[motor] = OFF;
         } else {
             // one of those flags must be set
-            Serial.print("received invalid byte");
+            this_port->print("received invalid byte");
         }
         // reset its blink counter
         motorCounters[motor] = 0;
     }
 }
+//function overload
+void checkSerial(usb_serial_class *this_port) {
+    unsigned char incomingByte;
+    int motor;
+    if (this_port->available() > 0) {
+        incomingByte = this_port->read();
 
+        this_port->print("USB received: ");
+        this_port->println(incomingByte, DEC);
+
+				// first, check for a win
+				if (incomingByte == 0xFF) {
+						winAnimation();
+						return;
+				}
+
+        // mask off lower five bits for the motor
+        motor = incomingByte & MOTOR_FLAG;
+
+        this_port->print("MOTOR: ");
+        this_port->println(motor);
+        if (incomingByte & PROTO_ON) { //we are looking for 0x80
+            this_port->println("ON");
+            motorStates[motor] = ON;
+        } else if (incomingByte & PROTO_HALF) {
+            this_port->println("HALF");
+            motorStates[motor] = HALF;
+        } else if (incomingByte & PROTO_OFF) {
+            this_port->println("OFF");
+            motorStates[motor] = OFF;
+        } else {
+            // one of those flags must be set
+            this_port->print("received invalid byte");
+        }
+        // reset its blink counter
+        motorCounters[motor] = 0;
+    }
+}
 void blinkMotors() {
     //    for (int k=0; k < 3; k++) {
     //        bitsToSend[k] = 0;
@@ -197,9 +240,11 @@ void blinkMotors() {
 }
 
 void loop() {
-		checkSerial();
-    digitalWrite(1, HIGH); 
-    //digitalWrite(1,HIGH); 
+
+		checkSerial(&HWSerial);
+    checkSerial(&SWSerial);
+    digitalWrite(1, HIGH);
+    //digitalWrite(1,HIGH);
 		blinkMotors();
 		//		delay(1);
 		//    delay(10);
