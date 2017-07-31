@@ -30,17 +30,13 @@ void SerialWriter::setMotor(int m, MotorState ms) { //m = index of motor
      ofLogNotice() << "writing " << b;
     std::cout<<std::bitset<8>(b)<<std::endl; //this is the binary code unmasked
     if(serial->isInitialized()){
-     //   ofLogNotice() << "writing serial data";
+        ofLogNotice() << "writing serial data";
         serial->writeByte(b);
-       
-    } else {    
-    //    ofLogNotice() << "no serial available";
+    } else {
+        ofLogNotice() << "no serial available";
     }
-    serial->close();
 }
-void SerialWriter::closePort(){
-    serial->close(); 
-}
+
 void SerialWriter::winAnimation() {
     ofLogNotice() << "sending win animation signal";
     serial->writeByte(0xFF);

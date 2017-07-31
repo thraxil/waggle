@@ -2,20 +2,22 @@
 //http://forum.arduino.cc/index.php?topic=142753.0
 
 
-#define SWSerial Serial
+
 #define HWSerial Serial1
+
 #define N_MOTORS 7
 #define BLINK_INTERVAL 60
 #define LEDSTRIP 12
 #define NUMPIXELS 30
 
 #define MOTOR_1 10
-#define MOTOR_2 6
-#define MOTOR_3 5
-#define MOTOR_4 4
-#define MOTOR_5 3
-#define MOTOR_6 9
+#define MOTOR_2 9
+#define MOTOR_3 3
+#define MOTOR_4 6
+#define MOTOR_5 5
+#define MOTOR_6 4
 #define MOTOR_7 21
+
 
 // motor states
 #define OFF 0
@@ -27,9 +29,6 @@
 #define PROTO_OFF 0x20
 #define MOTOR_FLAG 0x1f
 
-#define MOTOR_25 6
-#define MOTOR_26 7
-#define MOTOR_27 8
 
 int latchPin = 2;
 int clockPin = 3;
@@ -46,14 +45,12 @@ int numLoops = 5;
 void setup() {
 
     HWSerial.begin(9600);
-    SWSerial.begin(9600);
+    Serial.begin(9600); 
     pinMode(latchPin, OUTPUT);
     pinMode(clockPin, OUTPUT);
     pinMode(dataPin, OUTPUT);
 
-    pinMode(MOTOR_25, OUTPUT);
-    pinMode(MOTOR_26, OUTPUT);
-    pinMode(MOTOR_27, OUTPUT);
+   
     pinMode(MOTOR_1, OUTPUT);
     pinMode(MOTOR_2, OUTPUT);
     pinMode(MOTOR_3, OUTPUT);
@@ -61,6 +58,7 @@ void setup() {
     pinMode(MOTOR_5, OUTPUT);
     pinMode(MOTOR_6, OUTPUT);
     pinMode(MOTOR_7, OUTPUT);
+    
     for (int i=0; i < N_MOTORS; i++) {
         motorStates[i] = 0;
         motorCounters[i] = 0;
@@ -126,6 +124,45 @@ void motorOff(int motor) {
     //    Serial.println(motor);
     registerWrite(motor, LOW);
 }
+//overloaded port
+//void checkSerial(Stream *this_port) {
+//    unsigned char incomingByte;
+//    int motor;
+//    if (this_port->available() > 0) {
+//        incomingByte = this_port->read();
+//
+//        this_port->print("USB received: ");
+//        this_port->println(incomingByte, DEC);
+//
+//				// first, check for a win
+//				if (incomingByte == 0xFF) {
+//						winAnimation();
+//						return;
+//				}
+//
+//        // mask off lower five bits for the motor
+//        motor = incomingByte & MOTOR_FLAG;
+//
+//        this_port->print("MOTOR: ");
+//        this_port->println(motor);
+//        if (incomingByte & PROTO_ON) { //we are looking for 0x80
+//            this_port->println("ON");
+//            motorStates[motor] = ON;
+//        } else if (incomingByte & PROTO_HALF) {
+//            this_port->println("HALF");
+//            motorStates[motor] = HALF;
+//        } else if (incomingByte & PROTO_OFF) {
+//            this_port->println("OFF");
+//            motorStates[motor] = OFF;
+//        } else {
+//            // one of those flags must be set
+//            this_port->print("received invalid byte");
+//        }
+//        // reset its blink counter
+//        motorCounters[motor] = 0;
+//    }
+//
+//}
 
 /*************************
 
@@ -137,81 +174,46 @@ the upper three bits are flags for ON/HALF/FULL. only one of them can be set.
 
 ************************/
 
-void checkSerial(HardwareSerial *this_port) {
+void checkSerial() {
     unsigned char incomingByte;
     int motor;
-    if (this_port->available() > 0) {
-        incomingByte = this_port->read();
+    if (Serial.available() > 0) {
+    
+        incomingByte = Serial.read();
 
-        this_port->print("USB received: ");
-        this_port->println(incomingByte, DEC);
+        HWSerial.print("USB received: ");
+        HWSerial.println(incomingByte, DEC);
 
-				// first, check for a win
-				if (incomingByte == 0xFF) {
-						winAnimation();
-						return;
-				}
+        // first, check for a win
+        if (incomingByte == 0xFF) {
+            winAnimation();
+            return;
+        }
 
         // mask off lower five bits for the motor
         motor = incomingByte & MOTOR_FLAG;
 
-        this_port->print("MOTOR: ");
-        this_port->println(motor);
+        HWSerial.print("MOTOR: ");
+        HWSerial.println(motor);
         if (incomingByte & PROTO_ON) { //we are looking for 0x80
-            this_port->println("ON");
+            HWSerial.println("ON");
             motorStates[motor] = ON;
         } else if (incomingByte & PROTO_HALF) {
-            this_port->println("HALF");
+            HWSerial.println("HALF");
             motorStates[motor] = HALF;
         } else if (incomingByte & PROTO_OFF) {
-            this_port->println("OFF");
+            HWSerial.println("OFF");
             motorStates[motor] = OFF;
         } else {
             // one of those flags must be set
-            this_port->print("received invalid byte");
+            HWSerial.print("received invalid byte");
         }
         // reset its blink counter
         motorCounters[motor] = 0;
     }
 }
-//function overload
-void checkSerial(usb_serial_class *this_port) {
-    unsigned char incomingByte;
-    int motor;
-    if (this_port->available() > 0) {
-        incomingByte = this_port->read();
 
-        this_port->print("USB received: ");
-        this_port->println(incomingByte, DEC);
 
-				// first, check for a win
-				if (incomingByte == 0xFF) {
-						winAnimation();
-						return;
-				}
-
-        // mask off lower five bits for the motor
-        motor = incomingByte & MOTOR_FLAG;
-
-        this_port->print("MOTOR: ");
-        this_port->println(motor);
-        if (incomingByte & PROTO_ON) { //we are looking for 0x80
-            this_port->println("ON");
-            motorStates[motor] = ON;
-        } else if (incomingByte & PROTO_HALF) {
-            this_port->println("HALF");
-            motorStates[motor] = HALF;
-        } else if (incomingByte & PROTO_OFF) {
-            this_port->println("OFF");
-            motorStates[motor] = OFF;
-        } else {
-            // one of those flags must be set
-            this_port->print("received invalid byte");
-        }
-        // reset its blink counter
-        motorCounters[motor] = 0;
-    }
-}
 void blinkMotors() {
     //    for (int k=0; k < 3; k++) {
     //        bitsToSend[k] = 0;
@@ -241,12 +243,12 @@ void blinkMotors() {
 
 void loop() {
 
-		checkSerial(&HWSerial);
-    checkSerial(&SWSerial);
-    digitalWrite(1, HIGH);
-    //digitalWrite(1,HIGH);
+  
+    //checkSerial(&HWSerial);
+    checkSerial();
+
 		blinkMotors();
-		//		delay(1);
+		  		delay(1);
 		//    delay(10);
 		// purely for debugging:
 		/* for (int numberToDisplay = 0; numberToDisplay < 28; numberToDisplay++) { */
@@ -255,6 +257,7 @@ void loop() {
 		/*     motorOff(numberToDisplay); */
 		/*    delay(250); */
 		/* } */
+ // HWSerial.flush(); 
 }
 bool inRange(int val, int minimum, int maximum)
 {

@@ -30,3 +30,32 @@ Function | Clip  | board   | Shield
 ground | orange  | black  | brown
 btn +|  black |  blue | purple
 led + ~ | brown | yellow  |  green
+
+## Motor Shield
+
+- board numbers 21 - 113 are on the top of the motor board.
+- Board numbers PY-5CM are at the top of connecting teensy sheild
+- All motors are pink
+- Ground is green
+
+**Pin to motor order:**
+
+Motor | Pin
+--|---|
+1 | 10
+2 | 9
+3 | 3
+4 | 6
+5 | 5
+6 | 4
+7 | 21
+
+# LED Strip
+pin 23
+*not connected yet*
+
+
+-----
+
+Notes:
+the second motor is dead 

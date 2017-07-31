@@ -12,7 +12,7 @@
 #ifdef TARGET_WIN32
 #define WRITE_SERIAL_PORT "WINDOWS SERIAL PORT GOES HERE"
 #else
-#define WRITE_SERIAL_PORT "/dev/tty.usbserial-AH01D4X4"
+#define WRITE_SERIAL_PORT "/dev/cu.usbserial-AH01D4X4"
 #endif
 
 class SerialWriter {

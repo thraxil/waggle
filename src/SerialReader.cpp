@@ -32,10 +32,10 @@ int SerialReader::update() {
         on = (bytesReturned[3] == 'N');
         ofLogNotice() << goal << ":" << on;
     }
-    serial->flush();
     if (on) {
         return goal;
     } else {
         return -1;
     }
+    serial->flush();
 }
