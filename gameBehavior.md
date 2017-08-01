@@ -17,7 +17,7 @@ The game waggle dance vibrational pattern plays directing a player to a goal pol
 
 Action: User selects the right pollen
 
-Result: A success sound plays. Two led lights on the LED strip comes on. A new pattern begins and the game loop chooses a new random goal.
+Result: A success sound plays. Two led lights on the LED strip comes on. A new pattern begins and the game loop chooses a new random goal. (this will have a total of 8 possible rounds)
 
 Action: User selects the wrong pollen.
 
