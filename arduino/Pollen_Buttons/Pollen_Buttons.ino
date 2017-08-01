@@ -19,7 +19,7 @@ int ledP5 = 11;
 
 int btns[6] = {btnP0,btnP1, btnP2, btnP3, btnP4, btnP5};
 int leds[6] = {ledP0, ledP1, ledP2, ledP3, ledP4, ledP5};
-String game_state = "start";
+String game_state = "start_sequence";
 
 // blinking or not
 int ledStates[6] = {0, 0, 0, 0, 0, 0};
@@ -28,7 +28,7 @@ int ledCounter[6] = {0, 0, 0, 0, 0, 0};
 //for pulsing
 int pulse = 0;
 int pulseSpeed = 1;
-int delayTime = 100;
+int delayTime = 50;
 void setup() {
   //  HWSERIAL.begin(9600);
     SWSERIAL.begin(9600);
@@ -46,16 +46,15 @@ int readBtns(int num){
 void pulseLeds(){
 
   for(int i=0; i < N_SENSORS; i++){
-    if(pulse > 255 || pulse < 0)
+    if(pulse > 250 || pulse < 0)
     {
       pulseSpeed = pulseSpeed * -1;
-      pulse = pulse + pulseSpeed;
     }
     analogWrite(leds[i],pulse);
-    SWSERIAL.write(pulse);
+    pulse = pulse + pulseSpeed;
+    SWSERIAL.println(pulse);
   }
-
-  delay(100);
+  delay(delayTime);
 }
 void play_game(){
   // read sensor data and react
@@ -86,6 +85,9 @@ String setGameState(){
       return incomming;
     }
   }
+  if(!Serial.available()){
+    return "start_sequence";
+  }
 }
 //void blinkLEDs() {
 //    for (int k=0; k<N_SENSORS; k++) {
@@ -110,8 +112,8 @@ String setGameState(){
 
 
   void loop() {
-    pulseLeds();
-    // game_state = setGameState();
-    // if(game_state == "start_sequence") pulseLeds();
-    // else if (game_state == "play_game") play_game();
+    //pulseLeds();
+    game_state = setGameState();
+    if(game_state == "start_sequence") pulseLeds();
+    else if (game_state == "play_game") play_game();
 }
