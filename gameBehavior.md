@@ -19,16 +19,13 @@ The game waggle dance vibrational pattern plays slowly, directing a player to a 
 
 Action: User selects the correct pollen
 
-<<<<<<< HEAD
-Result: A success sound plays. A side of the hex in the middle comes on. A new pattern begins and the game loop chooses a new random goal. (this will have a total of 6 possible rounds)
-=======
 Result: A success vibration plays in the center (plexi) hex ("DA-DA-DAAAAAAAA!"). Note: For all of the following states: if this level of vibe control is not feasible for Wednesday, play a placeholder sound file of some kind.
 One of the 6 sides of the LED strip comes on in the center hex.  There is a delay of N seconds (start with a delay setting of 10s, and make this value easily designer-editable with a change to a variable.) After the pause, new pattern begins and the game loop chooses a new random goal. (this will have a total of 6 possible rounds)
->>>>>>> 7d5ccc9063e90ad10dbf285ac397c5440ca85f4c
 
 Action: User selects the wrong pollen.
 
-Result: A failure vibration plays in the center hex: it ramps up about half way, but decreases speed gradually then halts, like a failure-to-launch, or a motor dying. Delay N seconds (designer editable.) The player gets another attempt to find the correct goal, and no led on the strip is given to the player.
+Result: A failure vibration plays in the center hex: it ramps up about half way, but decreases speed gradually then halts, like a failure-to-launch, or a motor dying. All the lights dim to black, all the motors go off and after a delay of 20 (editable) seconds, the game goes back to the start state.
+It's like the whole hive died from not finding enough nectar/pollen. The game restarts.
 
 Data wise, I'd like to collect win and failed attempts in a file for later.
 
@@ -42,15 +39,3 @@ The LED strip is fully lit. And the game is complete.
 Play the win vibration 3 times, then turn off all the motors, delay 20 (editable) seconds, and then take the game back to the start state.
 
 Note: We will have to think about a reward here - it could just be vibrational and the motors could make a pleased sound then go all off and the game could begin again and go back to the start state.
-
-#### End game on lose:
-
-<<<<<<< HEAD
-After 6 failures, the game plays the lose sound three times, all the motors go off and the game goes back to the start state.
-
-Note: It could be interesting to make an angry bee sound here. This is something to be designed.
-=======
-After 8 (designer editable, please) failures, the game plays a long version of the lose vibe (or in the meantime, an external sound file), all the lights dim to black, all the motors go off and after a delay of 20 (editable) seconds, the game goes back to the start state.
-
-It's like the whole hive died from not finding enough nectar/pollen.
->>>>>>> 7d5ccc9063e90ad10dbf285ac397c5440ca85f4c
