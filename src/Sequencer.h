@@ -34,7 +34,8 @@ class Sequencer {
     float nextStepTime;
     int goal;
     int step;
-		int StepTime;
+		int FullStepTime;
+		int HalfStepTime;
 		int lastMotor;
     Sequence currentSequence;
     std::map <int, Sequence> patterns;

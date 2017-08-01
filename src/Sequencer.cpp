@@ -30,7 +30,8 @@ void Sequencer::setup(MotorManager * m) {
     motors = m;
     isRunning = false;
     isPaused = false;
-    StepTime = 100;
+    FullStepTime = 100;
+    HalfStepTime = 200;
 
     // define the patterns. remember, motors:
     //    0 1
@@ -90,11 +91,15 @@ void Sequencer::update() {
     }
     auto currentTime = ofGetElapsedTimeMillis();
     if (currentTime > nextStepTime) {
-        nextStepTime = currentTime + StepTime;
         auto idx = step % currentSequence.steps.size();
         auto s = currentSequence.steps.at(idx);
         motors->setMotorState(lastMotor, MotorState::OFF);
         motors->setMotorState(s.motor, s.state);
+        if (s.state == MotorState::FULL) {
+            nextStepTime = currentTime + FullStepTime;
+        } else {
+            nextStepTime = currentTime + HalfStepTime;
+        }
         lastMotor = s.motor;
         step++;
     }
@@ -122,11 +127,13 @@ void Sequencer::togglePause() {
 }
 
 void Sequencer::speedUp() {
-    StepTime *= .9;
-    ofLogNotice() << StepTime;
+    FullStepTime *= .9;
+    HalfStepTime *= .9;    
+    ofLogNotice() << FullStepTime;
 }
 
 void Sequencer::speedDown() {
-    StepTime *= 1.1;
-    ofLogNotice() << StepTime;
+    FullStepTime *= 1.1;
+    HalfStepTime *= 1.1;    
+    ofLogNotice() << FullStepTime;
 }
