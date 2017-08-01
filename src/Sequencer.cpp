@@ -12,6 +12,8 @@ Sequence buildStandardSequence(unsigned steps[16]) {
    
 
     s.steps.push_back({steps[3], MotorState::HALF});
+    s.steps.push_back({steps[3], MotorState::HALF});
+    s.steps.push_back({steps[4], MotorState::HALF});
     s.steps.push_back({steps[4], MotorState::HALF});
 
 
@@ -21,6 +23,8 @@ Sequence buildStandardSequence(unsigned steps[16]) {
 
 
     s.steps.push_back({steps[8], MotorState::HALF});
+    s.steps.push_back({steps[8], MotorState::HALF});
+    s.steps.push_back({steps[9], MotorState::HALF});
     s.steps.push_back({steps[9], MotorState::HALF});
 
     return s;
