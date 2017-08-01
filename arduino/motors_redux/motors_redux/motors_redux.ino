@@ -73,8 +73,8 @@ void checkSerial() {
     unsigned char incomingByte;
     int motor;
     
-    if (localSerial.available() > 0) {
-        incomingByte = localSerial.read();
+    if (HWSERIAL.available() > 0) {
+        incomingByte = HWSERIAL.read();
         HWSERIAL.println(incomingByte); 
         localSerial.println(incomingByte);
         HWSERIAL.print("USB received: ");
