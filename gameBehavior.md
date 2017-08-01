@@ -1,27 +1,34 @@
 # Games States:
 
+Note: For just about any value-defined behavior below, please expose it as a variable in a settings file so that we can easily tweak design and recompile without digging in code.  Many of these cases are specifically requested below, but some could be added which are not noted.  Anything with a defined value is fair game and will make game testing and balancing WAAAAAAY easier and less annoying for everyone!
+
 ### State one:
 
-Start button is visible on the game UI. Eventually, there will be a start button at the front of the game but we've not designed this yet. For now, no goals are selected. The LEDs on the pollen are just slowly pulsing on and off.
+Start button is visible on the PC control UI used by the game-runner. (Eventually, there will be a hardware start button at the front of the game but we've not designed this yet.) For now, no goals are selected. The LEDs on the pollen are just slowly pulsing on and off.
 
 #### Possible User Interactions:
 Action: User presses start button.
 
-Result: If the user presses start a random goal is selected and the game begins
+Result: If the user/game-runner presses start, a random pollen goal is selected, and the game begins.
 
 ### State two:
 
-The game waggle dance vibrational pattern plays directing a player to a goal pollen. The hexes trigger shorter pluses on the hexes looping back to the main line. If this was music, it would be a 1/4, 1/4, 1/4, whole whole whole, 1/4, 1/4, 1/4 rhythm.
+The game waggle dance vibrational pattern plays slowly, directing a player to a goal pollen. The hexes trigger shorter pulses on the hexes looping back to the main line. If this was music, it would be a "1/4, 1/4, 1/4, 1/4, whole, whole, whole, 1/4, 1/4, 1/4, 1/4" rhythm.  (in current radial configuration, the center line is always 3 hexes, with two "circling back" hexes, and since the side hex notes are shorter, it should play the 1/4 note twice per hex to give the player more time to sense it.) (please make these vibe lengths and repetitions-per-hex into variables.)
 
 #### Possible User Interactions:
 
-Action: User selects the right pollen
+Action: User selects the correct pollen
 
+<<<<<<< HEAD
 Result: A success sound plays. A side of the hex in the middle comes on. A new pattern begins and the game loop chooses a new random goal. (this will have a total of 6 possible rounds)
+=======
+Result: A success vibration plays in the center (plexi) hex ("DA-DA-DAAAAAAAA!"). Note: For all of the following states: if this level of vibe control is not feasible for Wednesday, play a placeholder sound file of some kind.
+One of the 6 sides of the LED strip comes on in the center hex.  There is a delay of N seconds (start with a delay setting of 10s, and make this value easily designer-editable with a change to a variable.) After the pause, new pattern begins and the game loop chooses a new random goal. (this will have a total of 6 possible rounds)
+>>>>>>> 7d5ccc9063e90ad10dbf285ac397c5440ca85f4c
 
 Action: User selects the wrong pollen.
 
-Result: A failure sound plays. The player gets another attemp to find the goal and no led on the strip is given to the player.
+Result: A failure vibration plays in the center hex: it ramps up about half way, but decreases speed gradually then halts, like a failure-to-launch, or a motor dying. Delay N seconds (designer editable.) The player gets another attempt to find the correct goal, and no led on the strip is given to the player.
 
 Data wise, I'd like to collect win and failed attempts in a file for later.
 
@@ -32,12 +39,18 @@ Data wise, I'd like to collect win and failed attempts in a file for later.
 Win possiblity
 The LED strip is fully lit. And the game is complete.
 
-For now just turn off all the motors and and play the win sound 3 times and then take the game back to the start state.
+Play the win vibration 3 times, then turn off all the motors, delay 20 (editable) seconds, and then take the game back to the start state.
 
 Note: We will have to think about a reward here - it could just be vibrational and the motors could make a pleased sound then go all off and the game could begin again and go back to the start state.
 
 #### End game on lose:
 
+<<<<<<< HEAD
 After 6 failures, the game plays the lose sound three times, all the motors go off and the game goes back to the start state.
 
 Note: It could be interesting to make an angry bee sound here. This is something to be designed.
+=======
+After 8 (designer editable, please) failures, the game plays a long version of the lose vibe (or in the meantime, an external sound file), all the lights dim to black, all the motors go off and after a delay of 20 (editable) seconds, the game goes back to the start state.
+
+It's like the whole hive died from not finding enough nectar/pollen.
+>>>>>>> 7d5ccc9063e90ad10dbf285ac397c5440ca85f4c

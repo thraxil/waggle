@@ -19,20 +19,22 @@ int ledP5 = 11;
 
 int btns[6] = {btnP0,btnP1, btnP2, btnP3, btnP4, btnP5};
 int leds[6] = {ledP0, ledP1, ledP2, ledP3, ledP4, ledP5};
-
+String game_state = "start";
 
 // blinking or not
 int ledStates[6] = {0, 0, 0, 0, 0, 0};
 int ledCounter[6] = {0, 0, 0, 0, 0, 0};
 
-
+//for pulsing
+int pulse = 0;
+int pulseSpeed = 1;
+int delayTime = 100;
 void setup() {
   //  HWSERIAL.begin(9600);
     SWSERIAL.begin(9600);
     for (int i=0; i < N_SENSORS; i++) {
         pinMode(leds[i], OUTPUT);
         pinMode(btns[i],INPUT_PULLUP);
-
     }
 }
 
@@ -41,7 +43,49 @@ int readBtns(int num){
     int val = digitalRead(num);
     return val;
 }
+void pulseLeds(){
+  if(pulse > 255 || pulse < 0)
+  {
+    pulseSpeed = pulseSpeed * -1;
+    pulse = pulse + pulseSpeed;
+  }
+  
+  for(int i=0; i < N_SENSORS; i++){
+    analogWrite(leds[i],pulse);
+  }
 
+  delay(100);
+}
+void play_game(){
+  // read sensor data and react
+  for(int i=0; i < N_SENSORS; i++){
+      int btnVal =readBtns(btns[i]);
+      Serial.print("btn_");
+      Serial.print(i);
+      Serial.print(":");
+      Serial.println(!btnVal);
+
+      if(!btnVal == 1)
+      {
+        analogWrite(leds[i], 0);
+        ledStates[i] = 1;
+      }else{
+        analogWrite(leds[i], 255);
+        ledStates[i] = 0;
+      }
+    }
+}
+String setGameState(){
+  if(Serial.available() > 0) {
+    String incomming = Serial.readString();
+    if(incomming=="start_sequence"){
+      return incomming;
+    }
+    else if(incomming=="play_game"){
+      return incomming;
+    }
+  }
+}
 //void blinkLEDs() {
 //    for (int k=0; k<N_SENSORS; k++) {
 //        ledCounter[k]++;
@@ -65,41 +109,8 @@ int readBtns(int num){
 
 
   void loop() {
-
-    // read sensor data and react
-    for(int i=0; i < N_SENSORS; i++){
-        int btnVal =readBtns(btns[i]);
-        Serial.print(i);
-        Serial.print(":");
-        Serial.println(!btnVal);
-    
-        if(!btnVal == 1)
-        {
-          analogWrite(leds[i], 0);
-          ledStates[i] = 1;
-        }else{
-          analogWrite(leds[i], 255);
-          ledStates[i] = 0;
-        }
-        // if(btnVal == 1){
-				// 		if (ledStates[i] == 0) {
-				// 				ledStates[i] = 1;
-        //         SWSERIAL.print(i);
-        //         SWSERIAL.println(":ON");
-        //         analogWrite(leds[i], 255);
-        //
-				// 		}
-        // } else {
-				// 		if (ledStates[i] == 1) {
-				// 				ledStates[i] = 0;
-				// 				//HWSERIAL.print(i);
-        //         SWSERIAL.print(i);
-				// 				//HWSERIAL.println(":OFF");
-        //         SWSERIAL.println(":OFF");
-        //         analogWrite(leds[i], 0);
-				// 		}
-        //}
-
-    }
-
+    pulseLeds();
+    // game_state = setGameState();
+    // if(game_state == "start_sequence") pulseLeds();
+    // else if (game_state == "play_game") play_game();
 }
