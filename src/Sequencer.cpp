@@ -102,8 +102,8 @@ void Sequencer::update() {
     }
 }
 
-int Sequencer::stepTimeFromMotorState(Step step) {
-    if (step.state == MotorState::FULL) {
+int Sequencer::stepTimeFromMotorState(Step s) {
+    if (s.state == MotorState::FULL) {
         return FullStepTime;
     }
     return HalfStepTime;
