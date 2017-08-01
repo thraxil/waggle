@@ -1,5 +1,7 @@
 # Games States:
 
+Note: For just about any value-defined behavior below, please expose it as a variable in a settings file so that we can easily tweak design and recompile without digging in code.  Many of these cases are specifically requested below, but some could be added which are not noted.  Anything with a defined value is fair game and will make game testing and balancing WAAAAAAY easier and less annoying for everyone!
+
 ### State one:
 
 Start button is visible on the PC control UI used by the game-runner. (Eventually, there will be a hardware start button at the front of the game but we've not designed this yet.) For now, no goals are selected. The LEDs on the pollen are just slowly pulsing on and off.
@@ -11,7 +13,7 @@ Result: If the user/game-runner presses start, a random pollen goal is selected,
 
 ### State two:
 
-The game waggle dance vibrational pattern plays slowly, directing a player to a goal pollen. The hexes trigger shorter pulses on the hexes looping back to the main line. If this was music, it would be a "1/4, 1/4, 1/4, 1/4, whole, whole, whole, 1/4, 1/4, 1/4, 1/4" rhythm.  (in current radial configuration, the center line is always 3 hexes, with two "circling back" hexes, and since the side hex notes are shorter, it should play the 1/4 note twice per hex to give the player more time to sense it.)
+The game waggle dance vibrational pattern plays slowly, directing a player to a goal pollen. The hexes trigger shorter pulses on the hexes looping back to the main line. If this was music, it would be a "1/4, 1/4, 1/4, 1/4, whole, whole, whole, 1/4, 1/4, 1/4, 1/4" rhythm.  (in current radial configuration, the center line is always 3 hexes, with two "circling back" hexes, and since the side hex notes are shorter, it should play the 1/4 note twice per hex to give the player more time to sense it.) (please make these vibe lengths and repetitions-per-hex into variables.)
 
 #### Possible User Interactions:
 
