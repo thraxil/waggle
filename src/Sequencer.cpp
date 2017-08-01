@@ -95,14 +95,18 @@ void Sequencer::update() {
         auto s = currentSequence.steps.at(idx);
         motors->setMotorState(lastMotor, MotorState::OFF);
         motors->setMotorState(s.motor, s.state);
-        if (s.state == MotorState::FULL) {
-            nextStepTime = currentTime + FullStepTime;
-        } else {
-            nextStepTime = currentTime + HalfStepTime;
-        }
+        auto stepTime = stepTimeFromMotorState(s);
+        nextStepTime = currentTime + stepTime;
         lastMotor = s.motor;
         step++;
     }
+}
+
+int Sequencer::stepTimeFromMotorState(Step step) {
+    if (step.state == MotorState::FULL) {
+        return FullStepTime;
+    }
+    return HalfStepTime;
 }
 
 void Sequencer::start(int goal) {

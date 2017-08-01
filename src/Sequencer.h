@@ -38,6 +38,7 @@ class Sequencer {
 		int HalfStepTime;
 		int lastMotor;
     Sequence currentSequence;
+		int stepTimeFromMotorState(Step);
     std::map <int, Sequence> patterns;
 };
 #endif
