@@ -26,28 +26,6 @@ Sequence buildStandardSequence(unsigned steps[16]) {
     return s;
 }
 
-//Sequence buildLimitedSequence(unsigned full[4], unsigned half1[], unsigned half1N,
-//                              unsigned half2[], unsigned half2N) {
-//    Sequence s;
-//    for (unsigned i=0; i<4; i++) {
-//        s.steps.push_back({full[i], MotorState::FULL});
-//    }
-//
-//    for (unsigned i=0; i<half1N; i++) {
-//        s.steps.push_back({half1[i], MotorState::HALF});
-//    }
-//
-//    for (unsigned i=0; i<4; i++) {
-//        s.steps.push_back({full[i], MotorState::FULL});
-//    }
-//
-//    for (unsigned i=0; i<half2N; i++) {
-//        s.steps.push_back({half2[i], MotorState::HALF});
-//    }
-//
-//    return s;
-//}
-
 void Sequencer::setup(MotorManager * m) {
     motors = m;
     isRunning = false;
@@ -55,9 +33,9 @@ void Sequencer::setup(MotorManager * m) {
     StepTime = 100;
 
     // define the patterns. remember, motors:
-//    0 1
-//   2 3 4
-//    5 6
+    //    0 1
+    //   2 3 4
+    //    5 6
     // ------ North ------
 
     unsigned N1steps[10] = {2, 3, 4, // FULL ->
@@ -96,8 +74,6 @@ void Sequencer::setup(MotorManager * m) {
                             5,2}; // HALF <-
     auto N6_sequence = buildStandardSequence(N6steps);
     
- 
-
     patterns[0] = N1_sequence;
     patterns[5] = N2_sequence;
     patterns[4] = N3_sequence;
@@ -105,9 +81,6 @@ void Sequencer::setup(MotorManager * m) {
     patterns[2] = N5_sequence;
     patterns[1] = N6_sequence;
 
-   
-
-    
     lastMotor = 0;
 }
 
@@ -120,7 +93,6 @@ void Sequencer::update() {
         nextStepTime = currentTime + StepTime;
         auto idx = step % currentSequence.steps.size();
         auto s = currentSequence.steps.at(idx);
-     //   cout << idx << endl;
         motors->setMotorState(lastMotor, MotorState::OFF);
         motors->setMotorState(s.motor, s.state);
         lastMotor = s.motor;
@@ -130,7 +102,6 @@ void Sequencer::update() {
 
 void Sequencer::start(int goal) {
     
-   // cout << goal << " is the goal number from the sequencer " << endl;
     // select a sequence for the goal
     currentSequence = patterns.at(goal);
 
