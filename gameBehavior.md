@@ -17,7 +17,7 @@ The game waggle dance vibrational pattern plays directing a player to a goal pol
 
 Action: User selects the right pollen
 
-Result: A success sound plays. Two led lights on the LED strip comes on. A new pattern begins and the game loop chooses a new random goal. (this will have a total of 8 possible rounds)
+Result: A success sound plays. A side of the hex in the middle comes on. A new pattern begins and the game loop chooses a new random goal. (this will have a total of 6 possible rounds)
 
 Action: User selects the wrong pollen.
 
@@ -38,6 +38,6 @@ Note: We will have to think about a reward here - it could just be vibrational a
 
 #### End game on lose:
 
-After 8 failures, the game plays the lose sound three times, all the motors go off and the game goes back to the start state.
+After 6 failures, the game plays the lose sound three times, all the motors go off and the game goes back to the start state.
 
-Note: It could be interesting to make an angry bee sound here. This is something to be designed. 
+Note: It could be interesting to make an angry bee sound here. This is something to be designed.
