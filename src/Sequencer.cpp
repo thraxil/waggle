@@ -30,8 +30,8 @@ void Sequencer::setup(MotorManager * m) {
     motors = m;
     isRunning = false;
     isPaused = false;
-    FullStepTime = 100;
-    HalfStepTime = 200;
+    FullStepTime = 4000;
+    HalfStepTime = 1000;
 
     // define the patterns. remember, motors:
     //    0 1

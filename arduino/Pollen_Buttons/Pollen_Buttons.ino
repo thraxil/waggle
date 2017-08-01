@@ -44,14 +44,15 @@ int readBtns(int num){
     return val;
 }
 void pulseLeds(){
-  if(pulse > 255 || pulse < 0)
-  {
-    pulseSpeed = pulseSpeed * -1;
-    pulse = pulse + pulseSpeed;
-  }
-  
+
   for(int i=0; i < N_SENSORS; i++){
+    if(pulse > 255 || pulse < 0)
+    {
+      pulseSpeed = pulseSpeed * -1;
+      pulse = pulse + pulseSpeed;
+    }
     analogWrite(leds[i],pulse);
+    SWSERIAL.write(pulse);
   }
 
   delay(100);
@@ -60,10 +61,10 @@ void play_game(){
   // read sensor data and react
   for(int i=0; i < N_SENSORS; i++){
       int btnVal =readBtns(btns[i]);
-      Serial.print("btn_");
-      Serial.print(i);
-      Serial.print(":");
-      Serial.println(!btnVal);
+      SWSERIAL.print("btn_");
+      SWSERIAL.print(i);
+      SWSERIAL.print(":");
+      SWSERIAL.println(!btnVal);
 
       if(!btnVal == 1)
       {
