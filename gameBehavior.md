@@ -17,7 +17,7 @@ The game waggle dance vibrational pattern plays directing a player to a goal pol
 
 Action: User selects the right pollen
 
-Result: A success sound plays. An led light on the LED strip comes on. A new pattern begins and the game loop chooses a new random goal.
+Result: A success sound plays. Two led lights on the LED strip comes on. A new pattern begins and the game loop chooses a new random goal.
 
 Action: User selects the wrong pollen.
 
@@ -28,6 +28,7 @@ Data wise, I'd like to collect win and failed attempts in a file for later.
 ### State three:
 
 The LED strip is fully lit. And the game is complete.
+
 For now just turn off all the motors and and play the win sound 3 times and then take the game back to the start state.
 
 Note: We will have to think about a reward here - it could just be vibrational and the motors could make a pleased sound then go all off and the game could begin again and go back to the start state.
