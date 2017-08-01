@@ -219,3 +219,8 @@ void ofApp::gotMessage(ofMessage msg){
 void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
+
+void ofApp::exit() {
+    cout << "stopping all motors" << endl;
+    sequencer.stop();
+}
