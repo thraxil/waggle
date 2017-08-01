@@ -27,8 +27,17 @@ Data wise, I'd like to collect win and failed attempts in a file for later.
 
 ### State three:
 
+#### End game on win:
+
+Win possiblity
 The LED strip is fully lit. And the game is complete.
 
 For now just turn off all the motors and and play the win sound 3 times and then take the game back to the start state.
 
 Note: We will have to think about a reward here - it could just be vibrational and the motors could make a pleased sound then go all off and the game could begin again and go back to the start state.
+
+#### End game on lose:
+
+After 8 failures, the game plays the lose sound three times, all the motors go off and the game goes back to the start state.
+
+Note: It could be interesting to make an angry bee sound here. This is something to be designed. 
