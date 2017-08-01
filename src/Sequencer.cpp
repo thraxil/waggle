@@ -9,13 +9,16 @@ Sequence buildStandardSequence(unsigned steps[16]) {
     s.steps.push_back({steps[0], MotorState::FULL});
     s.steps.push_back({steps[1], MotorState::FULL});
     s.steps.push_back({steps[2], MotorState::FULL});
-   
+
 
     s.steps.push_back({steps[3], MotorState::HALF});
+    s.steps.push_back({steps[3], MotorState::OFF});
     s.steps.push_back({steps[3], MotorState::HALF});
+    s.steps.push_back({steps[3], MotorState::OFF});
     s.steps.push_back({steps[4], MotorState::HALF});
+    s.steps.push_back({steps[4], MotorState::OFF});
     s.steps.push_back({steps[4], MotorState::HALF});
-
+    s.steps.push_back({steps[4], MotorState::OFF});
 
     s.steps.push_back({steps[5], MotorState::FULL});
     s.steps.push_back({steps[6], MotorState::FULL});
@@ -23,9 +26,13 @@ Sequence buildStandardSequence(unsigned steps[16]) {
 
 
     s.steps.push_back({steps[8], MotorState::HALF});
+    s.steps.push_back({steps[8], MotorState::OFF});
     s.steps.push_back({steps[8], MotorState::HALF});
+    s.steps.push_back({steps[8], MotorState::OFF});
     s.steps.push_back({steps[9], MotorState::HALF});
+    s.steps.push_back({steps[9], MotorState::OFF});
     s.steps.push_back({steps[9], MotorState::HALF});
+    s.steps.push_back({steps[9], MotorState::OFF});
 
     return s;
 }
@@ -34,8 +41,9 @@ void Sequencer::setup(MotorManager * m) {
     motors = m;
     isRunning = false;
     isPaused = false;
-    FullStepTime = 4000;
-    HalfStepTime = 1000;
+    OffStepTime = 50;
+    FullStepTime = 100;
+    HalfStepTime = 200;
 
     // define the patterns. remember, motors:
     //    0 1
@@ -72,13 +80,13 @@ void Sequencer::setup(MotorManager * m) {
                             1,3,5, // FULL ->
                             2,0}; // HALF <-
     auto N5_sequence = buildStandardSequence(N5steps);
-   
+
     unsigned N6steps[10] = {0,3,6, // FULL ->
                             4,1, // HALF <-
                             0,3,6, // FULL ->
                             5,2}; // HALF <-
     auto N6_sequence = buildStandardSequence(N6steps);
-    
+
     patterns[0] = N1_sequence;
     patterns[5] = N2_sequence;
     patterns[4] = N3_sequence;
@@ -110,11 +118,14 @@ int Sequencer::stepTimeFromMotorState(Step s) {
     if (s.state == MotorState::FULL) {
         return FullStepTime;
     }
-    return HalfStepTime;
+    if (s.state == MotorState::HALF) {
+        return HalfStepTime;
+    }
+    return OffStepTime;
 }
 
 void Sequencer::start(int goal) {
-    
+
     // select a sequence for the goal
     currentSequence = patterns.at(goal);
 
@@ -136,12 +147,14 @@ void Sequencer::togglePause() {
 
 void Sequencer::speedUp() {
     FullStepTime *= .9;
-    HalfStepTime *= .9;    
+    HalfStepTime *= .9;
+    OffStepTime *= .9;
     ofLogNotice() << FullStepTime;
 }
 
 void Sequencer::speedDown() {
     FullStepTime *= 1.1;
-    HalfStepTime *= 1.1;    
+    HalfStepTime *= 1.1;
+    OffStepTime *= 1.1;
     ofLogNotice() << FullStepTime;
 }

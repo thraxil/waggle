@@ -22,8 +22,8 @@ class Sequencer {
     void start(int);
     void stop();
     void togglePause();
-		void speedUp();
-		void speedDown();
+    void speedUp();
+    void speedDown();
 
     Sequencer();
  private:
@@ -34,11 +34,12 @@ class Sequencer {
     float nextStepTime;
     int goal;
     int step;
-		int FullStepTime;
-		int HalfStepTime;
-		int lastMotor;
+    int OffStepTime;
+    int FullStepTime;
+    int HalfStepTime;
+    int lastMotor;
     Sequence currentSequence;
-		int stepTimeFromMotorState(Step);
+    int stepTimeFromMotorState(Step);
     std::map <int, Sequence> patterns;
 };
 #endif
