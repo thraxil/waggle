@@ -1,7 +1,7 @@
 #define N_SENSORS 6
 #define BLINK_INTERVAL 500
 //#define HWSERIAL Serial1
-#define SWSERIAL Serial 
+#define SWSERIAL Serial
 
 int btnP0 = 2;
 int btnP1 = 4;
@@ -28,10 +28,11 @@ int ledCounter[6] = {0, 0, 0, 0, 0, 0};
 
 void setup() {
   //  HWSERIAL.begin(9600);
-    SWSERIAL.begin(9600); 
+    SWSERIAL.begin(9600);
     for (int i=0; i < N_SENSORS; i++) {
         pinMode(leds[i], OUTPUT);
         pinMode(btns[i],INPUT_PULLUP);
+
     }
 }
 
@@ -68,32 +69,37 @@ int readBtns(int num){
     // read sensor data and react
     for(int i=0; i < N_SENSORS; i++){
         int btnVal =readBtns(btns[i]);
-
-        if(btnVal == 1){
-						if (ledStates[i] == 0) {
-								ledStates[i] = 1;
-								//HWSERIAL.print(i);
-                SWSERIAL.print(i); 
-								//HWSERIAL.println(":ON");
-                SWSERIAL.println("ON");
-                analogWrite(leds[i], 255);
-						}
-        } else {
-						if (ledStates[i] == 1) {
-								ledStates[i] = 0;
-								//HWSERIAL.print(i);
-                SWSERIAL.print(i); 
-								//HWSERIAL.println(":OFF");
-                SWSERIAL.println(":OFF");
-                analogWrite(leds[i], 0);
-						}  
+        Serial.print(i);
+        Serial.print(":");
+        Serial.println(!btnVal);
+    
+        if(!btnVal == 1)
+        {
+          analogWrite(leds[i], 0);
+          ledStates[i] = 1;
+        }else{
+          analogWrite(leds[i], 255);
+          ledStates[i] = 0;
         }
-       
+        // if(btnVal == 1){
+				// 		if (ledStates[i] == 0) {
+				// 				ledStates[i] = 1;
+        //         SWSERIAL.print(i);
+        //         SWSERIAL.println(":ON");
+        //         analogWrite(leds[i], 255);
+        //
+				// 		}
+        // } else {
+				// 		if (ledStates[i] == 1) {
+				// 				ledStates[i] = 0;
+				// 				//HWSERIAL.print(i);
+        //         SWSERIAL.print(i);
+				// 				//HWSERIAL.println(":OFF");
+        //         SWSERIAL.println(":OFF");
+        //         analogWrite(leds[i], 0);
+				// 		}
+        //}
+
     }
-//    for(int i = 0; i < N_SENSORS; i++) 
-//    {
-//      analogWrite(leds[i], 255); 
-//      delay(10); 
-//    }
-    //blinkLEDs();
+
 }

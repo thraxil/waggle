@@ -54,8 +54,7 @@ Motor | Pin
 pin 23
 *not connected yet*
 
-
 -----
 
 Notes:
-the second motor is dead 
+the second motor is dead they in order of 1 - 7 from top to bottom wiht the numbers at the top of the board
