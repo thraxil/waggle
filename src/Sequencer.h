@@ -34,6 +34,7 @@ class Sequencer {
     float nextStepTime;
     int goal;
     int step;
+		int OffStepTime;
 		int FullStepTime;
 		int HalfStepTime;
 		int lastMotor;

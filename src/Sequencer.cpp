@@ -12,10 +12,13 @@ Sequence buildStandardSequence(unsigned steps[16]) {
 
 
     s.steps.push_back({steps[3], MotorState::HALF});
+    s.steps.push_back({steps[3], MotorState::OFF});
     s.steps.push_back({steps[3], MotorState::HALF});
+    s.steps.push_back({steps[3], MotorState::OFF});
     s.steps.push_back({steps[4], MotorState::HALF});
+    s.steps.push_back({steps[4], MotorState::OFF});
     s.steps.push_back({steps[4], MotorState::HALF});
-
+    s.steps.push_back({steps[4], MotorState::OFF});
 
     s.steps.push_back({steps[5], MotorState::FULL});
     s.steps.push_back({steps[6], MotorState::FULL});
@@ -23,9 +26,13 @@ Sequence buildStandardSequence(unsigned steps[16]) {
 
 
     s.steps.push_back({steps[8], MotorState::HALF});
+    s.steps.push_back({steps[8], MotorState::OFF});
     s.steps.push_back({steps[8], MotorState::HALF});
+    s.steps.push_back({steps[8], MotorState::OFF});
     s.steps.push_back({steps[9], MotorState::HALF});
+    s.steps.push_back({steps[9], MotorState::OFF});
     s.steps.push_back({steps[9], MotorState::HALF});
+    s.steps.push_back({steps[9], MotorState::OFF});
 
     return s;
 }
@@ -34,6 +41,7 @@ void Sequencer::setup(MotorManager * m) {
     motors = m;
     isRunning = false;
     isPaused = false;
+    OffStepTime = 50;
     FullStepTime = 100;
     HalfStepTime = 200;
 
@@ -110,7 +118,10 @@ int Sequencer::stepTimeFromMotorState(Step s) {
     if (s.state == MotorState::FULL) {
         return FullStepTime;
     }
-    return HalfStepTime;
+    if (s.state == MotorState::HALF) {
+        return HalfStepTime;
+    }
+    return OffStepTime;
 }
 
 void Sequencer::start(int goal) {
@@ -137,11 +148,13 @@ void Sequencer::togglePause() {
 void Sequencer::speedUp() {
     FullStepTime *= .9;
     HalfStepTime *= .9;
+    OffStepTime *= .9;
     ofLogNotice() << FullStepTime;
 }
 
 void Sequencer::speedDown() {
     FullStepTime *= 1.1;
     HalfStepTime *= 1.1;
+    OffStepTime *= 1.1;
     ofLogNotice() << FullStepTime;
 }
